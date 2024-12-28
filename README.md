@@ -29,7 +29,7 @@ MyMusicTracker is a modern Android application where music lovers can track thei
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/MyMusicTracker.git
+git clone https://github.com/aydgnme/MyMusicTracker.git
 ```
 
 2. Create a new project in Firebase Console and add the `google-services.json` file to the `app/` directory.
@@ -78,6 +78,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-Project Owner - [@aydgnme](https://twitter.com/aydgnme)
+Project Owner - [@aydgn_me](https://twitter.com/aydgn_me)
 
-Project Link: [https://github.com/yourusername/MyMusicTracker](https://github.com/yourusername/MyMusicTracker) 
+Project Link: [https://github.com/aydgnme/MyMusicTracker](https://github.com/aydgnme/MyMusicTracker) 
