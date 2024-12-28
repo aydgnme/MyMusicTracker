@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "958488854728",
+    "firebase_url": "https://mymusictracker-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mymusictracker",
+    "storage_bucket": "mymusictracker.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958488854728:android:203b661cd7de27c93da5fd",
+        "android_client_info": {
+          "package_name": "me.aydgn.mymusictracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958488854728-d17milj2b24cuiracjluul7ncs2utecr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPym_vxCZF4ea5zizllf7xFCaJ_2t4twY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "958488854728-d17milj2b24cuiracjluul7ncs2utecr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
