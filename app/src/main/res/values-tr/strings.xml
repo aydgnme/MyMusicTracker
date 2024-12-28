@@ -43,4 +43,9 @@
     <string name="msg_code_sent">Doğrulama kodu gönderildi</string>
     <string name="msg_verification_success">Telefon doğrulama başarılı</string>
     <string name="msg_verification_failed">Doğrulama başarısız: %1$s</string>
+    
+    <!-- Dialog Messages -->
+    <string name="service_unavailable">Servis Kullanım Dışı</string>
+    <string name="phone_auth_unavailable_message">Telefon doğrulama servisi geçici olarak kullanım dışıdır. Lütfen e-posta veya Google girişi kullanın.</string>
+    <string name="btn_ok">Tamam</string>
 </resources> 

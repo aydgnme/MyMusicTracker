@@ -18,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
@@ -82,8 +83,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void startPhoneAuth() {
-        // Telefon doğrulama ekranına yönlendir
-        startActivity(new Intent(LoginActivity.this, PhoneAuthActivity.class));
+        // Show service unavailable dialog
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.service_unavailable)
+                .setMessage(R.string.phone_auth_unavailable_message)
+                .setPositiveButton(R.string.btn_ok, (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     @Override

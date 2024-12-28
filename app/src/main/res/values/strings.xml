@@ -43,4 +43,9 @@
     <string name="msg_code_sent">Verification code sent</string>
     <string name="msg_verification_success">Phone verification successful</string>
     <string name="msg_verification_failed">Verification failed: %1$s</string>
+    
+    <!-- Dialog Messages -->
+    <string name="service_unavailable">Service Unavailable</string>
+    <string name="phone_auth_unavailable_message">Phone authentication service is temporarily unavailable. Please use email or Google sign-in.</string>
+    <string name="btn_ok">OK</string>
 </resources>

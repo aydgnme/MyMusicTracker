@@ -43,4 +43,9 @@
     <string name="msg_code_sent">Cod de verificare trimis</string>
     <string name="msg_verification_success">Verificare telefonică reușită</string>
     <string name="msg_verification_failed">Verificare eșuată: %1$s</string>
+    
+    <!-- Dialog Messages -->
+    <string name="service_unavailable">Serviciu Indisponibil</string>
+    <string name="phone_auth_unavailable_message">Serviciul de autentificare prin telefon este temporar indisponibil. Vă rugăm să utilizați autentificarea prin email sau Google.</string>
+    <string name="btn_ok">OK</string>
 </resources> 
