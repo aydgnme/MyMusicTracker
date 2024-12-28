@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.MyMusicTracker.Chip" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">@color/spotify_dark_gray</item>
+        <item name="chipStrokeColor">@color/spotify_green</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">@color/spotify_white</item>
+        <item name="checkedIconTint">@color/spotify_green</item>
+        <item name="rippleColor">@color/spotify_green</item>
+    </style>
+</resources> 

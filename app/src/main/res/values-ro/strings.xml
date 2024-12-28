@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyMusicTracker</string>
+    
+    <!-- Registration Screen -->
+    <string name="title_create_account">Creează Cont Nou</string>
+    <string name="hint_full_name">Nume Complet</string>
+    <string name="hint_username">Nume Utilizator</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Parolă</string>
+    <string name="hint_confirm_password">Confirmă Parola</string>
+    <string name="hint_favorite_genres">Genuri Muzicale Preferate</string>
+    <string name="btn_register">Înregistrare</string>
+    <string name="btn_login">Autentificare</string>
+    <string name="text_already_have_account">Ai deja un cont?</string>
+    
+    <!-- Password Requirements -->
+    <string name="password_requirements">Minim 8 caractere, 1 majusculă, 1 minusculă, 1 cifră și 1 caracter special</string>
+    
+    <!-- Validation Messages -->
+    <string name="error_fill_all_fields">Vă rugăm completați toate câmpurile</string>
+    <string name="error_passwords_not_match">Parolele nu se potrivesc</string>
+    <string name="error_password_requirements">Parola trebuie să aibă minim 8 caractere și să conțină cel puțin o literă mare, o literă mică, o cifră și un caracter special (@#$%^&amp;+=!)</string>
+    <string name="error_registration_failed">Înregistrare eșuată: %1$s</string>
+    <string name="error_save_user_data">Salvarea datelor utilizatorului a eșuat: %1$s</string>
+    <string name="success_registration">Înregistrare reușită!</string>
+    
+    <!-- Login Screen -->
+    <string name="title_login">Autentificare</string>
+    <string name="btn_google_sign_in">Conectare cu Google</string>
+    <string name="btn_phone_sign_in">Conectare cu Telefonul</string>
+    <string name="text_no_account">Nu ai cont?</string>
+    <string name="error_login_failed">Autentificare eșuată: %1$s</string>
+    
+    <!-- Phone Authentication -->
+    <string name="title_phone_auth">Autentificare cu Telefon</string>
+    <string name="hint_phone_number">Număr de Telefon</string>
+    <string name="hint_verification_code">Cod de Verificare</string>
+    <string name="btn_send_code">Trimite Codul</string>
+    <string name="btn_verify_code">Verifică Codul</string>
+    <string name="error_phone_required">Numărul de telefon este obligatoriu</string>
+    <string name="error_code_required">Codul de verificare este obligatoriu</string>
+    <string name="msg_code_sent">Cod de verificare trimis</string>
+    <string name="msg_verification_success">Verificare telefonică reușită</string>
+    <string name="msg_verification_failed">Verificare eșuată: %1$s</string>
+</resources> 

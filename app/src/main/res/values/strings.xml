@@ -1,3 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MyMusicTracker</string>
+    
+    <!-- Registration Screen -->
+    <string name="title_create_account">Create New Account</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="hint_favorite_genres">Favorite Music Genres</string>
+    <string name="btn_register">Register</string>
+    <string name="btn_login">Login</string>
+    <string name="text_already_have_account">Already have an account?</string>
+    
+    <!-- Password Requirements -->
+    <string name="password_requirements">At least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character</string>
+    
+    <!-- Validation Messages -->
+    <string name="error_fill_all_fields">Please fill in all fields</string>
+    <string name="error_passwords_not_match">Passwords do not match</string>
+    <string name="error_password_requirements">Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character (@#$%^&amp;+=!)</string>
+    <string name="error_registration_failed">Registration failed: %1$s</string>
+    <string name="error_save_user_data">Failed to save user data: %1$s</string>
+    <string name="success_registration">Registration successful!</string>
+    
+    <!-- Login Screen -->
+    <string name="title_login">Login</string>
+    <string name="btn_google_sign_in">Sign in with Google</string>
+    <string name="btn_phone_sign_in">Sign in with Phone</string>
+    <string name="text_no_account">Don\'t have an account?</string>
+    <string name="error_login_failed">Login failed: %1$s</string>
+    
+    <!-- Phone Authentication -->
+    <string name="title_phone_auth">Phone Authentication</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="hint_verification_code">Verification Code</string>
+    <string name="btn_send_code">Send Code</string>
+    <string name="btn_verify_code">Verify Code</string>
+    <string name="error_phone_required">Phone number is required</string>
+    <string name="error_code_required">Verification code is required</string>
+    <string name="msg_code_sent">Verification code sent</string>
+    <string name="msg_verification_success">Phone verification successful</string>
+    <string name="msg_verification_failed">Verification failed: %1$s</string>
 </resources>
