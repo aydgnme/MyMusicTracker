@@ -5,57 +5,98 @@ public class Song {
     private String title;
     private String artist;
     private String album;
+    private String albumId;
     private String genre;
-    private int year;
-    private boolean isFavorite;
-    private long addedAt;
-    private String userId;
     private String albumArtUrl;
-    private String albumArtStoragePath;
+    private int trackNumber;
+    private int duration;
 
     public Song() {
-        // Empty constructor required for Firebase
+        // Firebase için boş constructor
     }
 
-    public Song(String id, String title, String artist, String album, String genre, 
-                int year, boolean isFavorite, long addedAt, String userId,
-                String albumArtUrl, String albumArtStoragePath) {
+    public Song(String id, String title, String artist, String album, String albumId,
+               String genre, String albumArtUrl, int trackNumber, int duration) {
         this.id = id;
         this.title = title;
         this.artist = artist;
         this.album = album;
+        this.albumId = albumId;
         this.genre = genre;
-        this.year = year;
-        this.isFavorite = isFavorite;
-        this.addedAt = addedAt;
-        this.userId = userId;
         this.albumArtUrl = albumArtUrl;
-        this.albumArtStoragePath = albumArtStoragePath;
+        this.trackNumber = trackNumber;
+        this.duration = duration;
     }
 
-    // Getters
-    public String getId() { return id; }
-    public String getTitle() { return title; }
-    public String getArtist() { return artist; }
-    public String getAlbum() { return album; }
-    public String getGenre() { return genre; }
-    public int getYear() { return year; }
-    public boolean isFavorite() { return isFavorite; }
-    public long getAddedAt() { return addedAt; }
-    public String getUserId() { return userId; }
-    public String getAlbumArtUrl() { return albumArtUrl; }
-    public String getAlbumArtStoragePath() { return albumArtStoragePath; }
+    public String getId() {
+        return id;
+    }
 
-    // Setters
-    public void setId(String id) { this.id = id; }
-    public void setTitle(String title) { this.title = title; }
-    public void setArtist(String artist) { this.artist = artist; }
-    public void setAlbum(String album) { this.album = album; }
-    public void setGenre(String genre) { this.genre = genre; }
-    public void setYear(int year) { this.year = year; }
-    public void setFavorite(boolean favorite) { isFavorite = favorite; }
-    public void setAddedAt(long addedAt) { this.addedAt = addedAt; }
-    public void setUserId(String userId) { this.userId = userId; }
-    public void setAlbumArtUrl(String albumArtUrl) { this.albumArtUrl = albumArtUrl; }
-    public void setAlbumArtStoragePath(String albumArtStoragePath) { this.albumArtStoragePath = albumArtStoragePath; }
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
+    }
+
+    public String getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(String albumId) {
+        this.albumId = albumId;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getAlbumArtUrl() {
+        return albumArtUrl;
+    }
+
+    public void setAlbumArtUrl(String albumArtUrl) {
+        this.albumArtUrl = albumArtUrl;
+    }
+
+    public int getTrackNumber() {
+        return trackNumber;
+    }
+
+    public void setTrackNumber(int trackNumber) {
+        this.trackNumber = trackNumber;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 } 

@@ -2,82 +2,95 @@
 <resources>
     <string name="app_name">MyMusicTracker</string>
     
-    <!-- Login Screen -->
-    <string name="login_title">Bine ați venit la MyMusicTracker</string>
-    <string name="email_hint">Email</string>
-    <string name="password_hint">Parolă</string>
-    <string name="login_button">Conectare</string>
-    <string name="register_button">Înregistrare</string>
-    <string name="forgot_password">Ai uitat parola?</string>
+    <!-- Authentication -->
+    <string name="login">Conectare</string>
+    <string name="register">Înregistrare</string>
+    <string name="email">Email</string>
+    <string name="password">Parolă</string>
+    <string name="confirm_password">Confirmă Parola</string>
     <string name="remember_me">Ține-mă minte</string>
-    <string name="google_sign_in">Conectare cu Google</string>
-    <string name="phone_sign_in">Conectare cu telefonul</string>
+    <string name="forgot_password">Ai uitat parola?</string>
+    <string name="dont_have_account">Nu ai cont?</string>
+    <string name="already_have_account">Ai deja cont?</string>
+    <string name="sign_up">Înregistrare</string>
+    <string name="sign_in">Conectare</string>
+    <string name="phone_number">Număr de telefon</string>
+    <string name="verification_code">Cod de verificare</string>
+    <string name="send_code">Trimite cod</string>
+    <string name="verify">Verifică</string>
+    
+    <!-- Login Screen -->
+    <string name="title_login">Bine ați venit la MyMusicTracker</string>
+    <string name="hint_email">Introduceți adresa de email</string>
+    <string name="hint_password">Introduceți parola</string>
+    <string name="hint_confirm_password">Confirmați parola</string>
+    <string name="btn_login">Conectare</string>
+    <string name="btn_google_sign_in">Conectare cu Google</string>
+    <string name="btn_phone_sign_in">Conectare cu telefonul</string>
+    <string name="text_no_account">Nu ai cont?</string>
+    <string name="text_already_have_account">Ai deja cont?</string>
     
     <!-- Registration Screen -->
     <string name="title_create_account">Creează cont nou</string>
-    <string name="hint_full_name">Nume complet</string>
-    <string name="hint_username">Nume utilizator</string>
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Parolă</string>
-    <string name="hint_confirm_password">Confirmă parola</string>
-    <string name="password_requirements">Minim 8 caractere, 1 majusculă, 1 minusculă, 1 cifră și 1 caracter special</string>
     <string name="btn_register">Înregistrare</string>
-    <string name="btn_login">Conectare</string>
-    <string name="text_already_have_account">Ai deja un cont?</string>
-    <string name="text_no_account">Nu ai cont?</string>
+    <string name="password_requirements">Minim 8 caractere, 1 majusculă, 1 minusculă, 1 cifră și 1 caracter special</string>
     
     <!-- Phone Authentication -->
     <string name="title_phone_auth">Autentificare cu telefon</string>
-    <string name="hint_phone_number">Număr de telefon</string>
-    <string name="hint_verification_code">Cod de verificare</string>
+    <string name="hint_phone_number">Introduceți numărul de telefon</string>
+    <string name="hint_verification_code">Introduceți codul de verificare</string>
     <string name="btn_send_code">Trimite codul</string>
     <string name="btn_verify_code">Verifică codul</string>
-    <string name="btn_google_sign_in">Conectare cu Google</string>
-    <string name="btn_phone_sign_in">Conectare cu telefonul</string>
-    <string name="title_login">Conectare</string>
+    <string name="msg_verification_success">Verificarea telefonului reușită</string>
+    <string name="msg_verification_failed">Verificarea a eșuat: %1$s</string>
+    <string name="msg_code_sent">Cod de verificare trimis</string>
+    
+    <!-- Profile -->
+    <string name="profile_title">Profil</string>
+    <string name="change_photo">Schimbă fotografia</string>
+    <string name="hint_full_name">Nume complet</string>
+    <string name="hint_username">Nume utilizator</string>
+    <string name="hint_favorite_genres">Genurile tale muzicale preferate</string>
+    <string name="save_profile">Salvează profilul</string>
+    <string name="profile_updated">Profil actualizat cu succes</string>
+    <string name="error_update_profile">Actualizarea profilului a eșuat: %1$s</string>
+    <string name="confirm_logout">Sigur doriți să vă deconectați?</string>
+    <string name="yes">Da</string>
+    <string name="no">Nu</string>
     
     <!-- Main Screen -->
     <string name="recently_played">Redate recent</string>
-    <string name="top_genres">Genurile tale preferate</string>
-    <string name="your_top_genres">Genurile tale preferate</string>
     <string name="all_songs">Toate melodiile</string>
-    <string name="add_song">Adaugă melodie</string>
     <string name="search_hint">Caută melodii, artiști, albume</string>
     
     <!-- Navigation -->
+    <string name="home">Acasă</string>
+    <string name="search">Căutare</string>
+    <string name="library">Bibliotecă</string>
+    <string name="library_title">Bibliotecă</string>
+    <string name="profile">Profil</string>
     <string name="nav_home">Acasă</string>
     <string name="nav_search">Căutare</string>
     <string name="nav_library">Bibliotecă</string>
-    <string name="nav_profile">Profil</string>
     
-    <!-- Song Details -->
-    <string name="song_details">Detalii melodie</string>
-    <string name="song_title">Titlu</string>
-    <string name="song_artist">Artist</string>
-    <string name="song_album">Album</string>
-    <string name="song_genre">Gen</string>
-    <string name="song_year">An</string>
-    <string name="save_button">Salvează</string>
-    <string name="delete_button">Șterge</string>
-    <string name="hint_favorite_genres">Genurile tale muzicale preferate</string>
-    <string name="hint_song_title">Introduceți titlul melodiei</string>
-    <string name="hint_artist_name">Introduceți numele artistului</string>
-    <string name="hint_album_name">Introduceți numele albumului</string>
-    <string name="hint_genre">Introduceți genul</string>
-    <string name="hint_year">Introduceți anul</string>
-    <string name="btn_save">Salvează</string>
+    <!-- Library Section -->
+    <string name="playlists">Liste de redare</string>
+    <string name="favorites">Favorite</string>
+    <string name="albums">Albume</string>
+    <string name="artists">Artiști</string>
     
-    <!-- Messages -->
-    <string name="loading">Se încarcă…</string>
-    <string name="error_occurred">A apărut o eroare</string>
-    <string name="success">Succes</string>
-    <string name="song_added">Melodie adăugată cu succes</string>
-    <string name="song_deleted">Melodie ștearsă cu succes</string>
-    <string name="song_updated">Melodie actualizată cu succes</string>
-    <string name="service_unavailable">Serviciu Indisponibil</string>
-    <string name="phone_auth_unavailable_message">Serviciul de autentificare prin telefon este temporar indisponibil. Vă rugăm să utilizați autentificarea prin email sau Google.</string>
-    <string name="btn_ok">OK</string>
-    <string name="albums_added_successfully">Albumele Twenty One Pilots au fost adăugate cu succes!</string>
+    <!-- Playlist Management -->
+    <string name="create_playlist">Creează listă de redare</string>
+    <string name="playlist_name">Nume listă de redare</string>
+    <string name="playlist_description">Descriere (Opțional)</string>
+    <string name="save">Salvează</string>
+    <string name="cancel">Anulează</string>
+    <string name="delete">Șterge</string>
+    <string name="edit">Editează</string>
+    <string name="add_to_playlist">Adaugă în lista de redare</string>
+    <string name="remove_from_playlist">Elimină din lista de redare</string>
+    <string name="add_to_favorites">Adaugă la favorite</string>
+    <string name="remove_from_favorites">Elimină din favorite</string>
     
     <!-- Error Messages -->
     <string name="error_fill_all_fields">Vă rugăm să completați toate câmpurile</string>
@@ -88,21 +101,38 @@
     <string name="error_login_failed">Conectarea a eșuat: %1$s</string>
     <string name="error_phone_required">Numărul de telefon este obligatoriu</string>
     <string name="error_code_required">Codul de verificare este obligatoriu</string>
+    <string name="error_message">Eroare: %1$s</string>
+    <string name="error_loading_playlist">Eroare la încărcarea listei de redare: %1$s</string>
+    <string name="playlist_not_found">Lista de redare nu a fost găsită</string>
+    <string name="error_invalid_phone_number">Format număr de telefon invalid</string>
+    <string name="error_too_many_requests">Prea multe solicitări. Vă rugăm să încercați mai târziu</string>
     
     <!-- Success Messages -->
     <string name="success_registration">Înregistrare reușită</string>
-    <string name="msg_verification_success">Verificarea telefonului reușită</string>
-    <string name="msg_verification_failed">Verificarea a eșuat: %1$s</string>
-    <string name="msg_code_sent">Cod de verificare trimis</string>
+    <string name="success_login">Conectare reușită</string>
+    <string name="success_playlist_created">Lista de redare a fost creată cu succes</string>
+    <string name="success_playlist_updated">Lista de redare a fost actualizată cu succes</string>
+    <string name="success_playlist_deleted">Lista de redare a fost ștearsă cu succes</string>
+    <string name="success_song_added">Melodia a fost adăugată cu succes</string>
+    <string name="success_song_removed">Melodia a fost eliminată cu succes</string>
     
-    <!-- Profile Screen -->
-    <string name="profile_title">Profil</string>
-    <string name="change_photo">Schimbă fotografia</string>
-    <string name="save_profile">Salvează profilul</string>
+    <!-- Dialogs -->
+    <string name="dialog_delete_title">Confirmă ștergerea</string>
+    <string name="dialog_delete_message">Sigur doriți să ștergeți acest element?</string>
+    <string name="dialog_yes">Da</string>
+    <string name="dialog_no">Nu</string>
+    
+    <!-- Settings -->
+    <string name="settings">Setări</string>
+    <string name="language">Limbă</string>
+    <string name="theme">Temă</string>
+    <string name="notifications">Notificări</string>
+    <string name="about">Despre</string>
     <string name="logout">Deconectare</string>
-    <string name="profile_updated">Profil actualizat cu succes</string>
-    <string name="error_update_profile">Actualizarea profilului a eșuat: %1$s</string>
-    <string name="confirm_logout">Sigur doriți să vă deconectați?</string>
-    <string name="yes">Da</string>
-    <string name="no">Nu</string>
+    
+    <!-- About -->
+    <string name="version">Versiune</string>
+    <string name="privacy_policy">Politica de confidențialitate</string>
+    <string name="terms_of_service">Termeni și condiții</string>
+    <string name="contact_us">Contactați-ne</string>
 </resources> 

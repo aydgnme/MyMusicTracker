@@ -150,12 +150,23 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Upload profile image
         if (selectedImageUri != null) {
-            StorageReference imageRef = storageRef.child("profile.jpg");
+            String timestamp = String.valueOf(System.currentTimeMillis());
+            StorageReference imageRef = storageRef.child("profile_" + timestamp + ".jpg");
+            
             imageRef.putFile(selectedImageUri)
                 .addOnSuccessListener(taskSnapshot -> imageRef.getDownloadUrl()
-                    .addOnSuccessListener(uri -> saveUserData(fullName, username, email, genres, uri.toString())))
+                    .addOnSuccessListener(uri -> saveUserData(fullName, username, email, genres, uri.toString()))
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(ProfileActivity.this, 
+                            getString(R.string.error_update_profile, e.getMessage()), 
+                            Toast.LENGTH_SHORT).show();
+                        saveUserData(fullName, username, email, genres, null);
+                    }))
                 .addOnFailureListener(e -> {
-                    Toast.makeText(ProfileActivity.this, getString(R.string.error_update_profile, e.getMessage()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, 
+                        getString(R.string.error_update_profile, e.getMessage()), 
+                        Toast.LENGTH_SHORT).show();
+                    saveUserData(fullName, username, email, genres, null);
                 });
         } else {
             saveUserData(fullName, username, email, genres, null);
@@ -199,4 +210,4 @@ public class ProfileActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-} 
+}

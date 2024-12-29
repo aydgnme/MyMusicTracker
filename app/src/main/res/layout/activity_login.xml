@@ -60,6 +60,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/remember_me"
             android:checked="false"
+            android:textColor="@color/spotify_light_gray"
             app:layout_constraintStart_toStartOf="@id/passwordLayout"
             app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
 

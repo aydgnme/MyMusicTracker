@@ -12,7 +12,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -71,9 +73,19 @@ public class PhoneAuthActivity extends AppCompatActivity {
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Toast.makeText(PhoneAuthActivity.this,
-                                getString(R.string.msg_verification_failed, e.getMessage()),
-                                Toast.LENGTH_SHORT).show();
+                        if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(PhoneAuthActivity.this,
+                                    getString(R.string.error_invalid_phone_number),
+                                    Toast.LENGTH_SHORT).show();
+                        } else if (e instanceof FirebaseTooManyRequestsException) {
+                            Toast.makeText(PhoneAuthActivity.this,
+                                    getString(R.string.error_too_many_requests),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(PhoneAuthActivity.this,
+                                    getString(R.string.msg_verification_failed, e.getMessage()),
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
