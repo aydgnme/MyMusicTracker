@@ -1,61 +1,56 @@
 package me.aydgn.mymusictracker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final int RC_SIGN_IN = 9001;
-    private FirebaseAuth auth;
-    private GoogleSignInClient googleSignInClient;
-    private TextInputEditText emailInput, passwordInput;
+    private FirebaseAuth mAuth;
+    private TextInputEditText emailInput;
+    private TextInputEditText passwordInput;
+    private MaterialCheckBox rememberMeCheckbox;
+    private SharedPreferences sharedPreferences;
+    private static final String PREF_NAME = "LoginPrefs";
+    private static final String KEY_REMEMBER_ME = "rememberMe";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASSWORD = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
-        // Google Sign In configuration
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        // View bağlantıları
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
+        rememberMeCheckbox = findViewById(R.id.checkboxRememberMe);
         MaterialButton loginButton = findViewById(R.id.loginButton);
         MaterialButton googleSignInButton = findViewById(R.id.googleSignInButton);
         MaterialButton phoneSignInButton = findViewById(R.id.phoneSignInButton);
-        MaterialButton registerButton = findViewById(R.id.registerButton);
 
-        // Click listeners
-        loginButton.setOnClickListener(v -> signInWithEmail());
-        googleSignInButton.setOnClickListener(v -> signInWithGoogle());
-        phoneSignInButton.setOnClickListener(v -> startPhoneAuth());
-        registerButton.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
+        // Kayıtlı bilgileri yükle
+        if (sharedPreferences.getBoolean(KEY_REMEMBER_ME, false)) {
+            emailInput.setText(sharedPreferences.getString(KEY_EMAIL, ""));
+            passwordInput.setText(sharedPreferences.getString(KEY_PASSWORD, ""));
+            rememberMeCheckbox.setChecked(true);
+            // Otomatik giriş yap
+            loginWithSavedCredentials();
+        }
+
+        loginButton.setOnClickListener(v -> handleLogin());
+        googleSignInButton.setOnClickListener(v -> handleGoogleSignIn());
+        phoneSignInButton.setOnClickListener(v -> handlePhoneSignIn());
     }
 
-    private void signInWithEmail() {
+    private void handleLogin() {
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
 
@@ -64,61 +59,58 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        auth.signInWithEmailAndPassword(email, password)
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        // Beni hatırla seçeneği işaretliyse bilgileri kaydet
+                        if (rememberMeCheckbox.isChecked()) {
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean(KEY_REMEMBER_ME, true);
+                            editor.putString(KEY_EMAIL, email);
+                            editor.putString(KEY_PASSWORD, password);
+                            editor.apply();
+                        } else {
+                            // Beni hatırla seçili değilse kayıtlı bilgileri temizle
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.clear();
+                            editor.apply();
+                        }
+                        // Ana ekrana yönlendir
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this,
-                                getString(R.string.error_login_failed, task.getException().getMessage()),
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, 
+                            getString(R.string.error_login_failed, task.getException().getMessage()),
+                            Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    private void signInWithGoogle() {
-        Intent signInIntent = googleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+    private void loginWithSavedCredentials() {
+        String email = sharedPreferences.getString(KEY_EMAIL, "");
+        String password = sharedPreferences.getString(KEY_PASSWORD, "");
 
-    private void startPhoneAuth() {
-        // Show service unavailable dialog
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.service_unavailable)
-                .setMessage(R.string.phone_auth_unavailable_message)
-                .setPositiveButton(R.string.btn_ok, (dialog, which) -> dialog.dismiss())
-                .show();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) {
-                Toast.makeText(this, "Google girişi başarısız: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+        if (!email.isEmpty() && !password.isEmpty()) {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        } else {
+                            // Otomatik giriş başarısız olursa kayıtlı bilgileri temizle
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.clear();
+                            editor.apply();
+                        }
+                    });
         }
     }
 
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Giriş başarılı
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
-                    } else {
-                        // Giriş başarısız
-                        Toast.makeText(LoginActivity.this, "Google ile giriş başarısız",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+    private void handleGoogleSignIn() {
+        // Google ile giriş işlemleri
+    }
+
+    private void handlePhoneSignIn() {
+        // Telefon ile giriş işlemleri
     }
 } 

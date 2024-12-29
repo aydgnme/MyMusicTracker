@@ -1,0 +1,14 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "songs": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$songId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    }
+  }
+} 

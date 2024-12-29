@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Widget.MyMusicTracker.Chip" parent="Widget.MaterialComponents.Chip.Filter">
-        <item name="chipBackgroundColor">@color/spotify_dark_gray</item>
-        <item name="chipStrokeColor">@color/spotify_green</item>
-        <item name="chipStrokeWidth">1dp</item>
+    <!-- Özel buton stili -->
+    <style name="Widget.MyMusicTracker.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/spotify_black</item>
+        <item name="backgroundTint">@color/spotify_green</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Özel TextInputLayout stili -->
+    <style name="Widget.MyMusicTracker.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/spotify_green</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="hintTextColor">@color/spotify_light_gray</item>
+        <item name="android:textColorHint">@color/spotify_light_gray</item>
+        <item name="boxBackgroundColor">@color/spotify_dark_gray</item>
+    </style>
+
+    <!-- Özel buton varyantları -->
+    <style name="Widget.MyMusicTracker.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/spotify_green</item>
         <item name="android:textColor">@color/spotify_white</item>
-        <item name="checkedIconTint">@color/spotify_green</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Widget.MyMusicTracker.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/spotify_green</item>
         <item name="rippleColor">@color/spotify_green</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Daire şeklinde ImageView stili -->
+    <style name="CircleImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Yuvarlatılmış köşeli ImageView stili -->
+    <style name="RoundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 </resources> 

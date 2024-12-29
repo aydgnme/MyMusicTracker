@@ -2,6 +2,17 @@
 <resources>
     <string name="app_name">MyMusicTracker</string>
     
+    <!-- Login Screen -->
+    <string name="login_title">MyMusicTracker\'a Hoş Geldiniz</string>
+    <string name="email_hint">E-posta</string>
+    <string name="password_hint">Şifre</string>
+    <string name="login_button">Giriş Yap</string>
+    <string name="register_button">Kayıt Ol</string>
+    <string name="forgot_password">Şifremi Unuttum</string>
+    <string name="remember_me">Beni Hatırla</string>
+    <string name="google_sign_in">Google ile Giriş Yap</string>
+    <string name="phone_sign_in">Telefon ile Giriş Yap</string>
+    
     <!-- Registration Screen -->
     <string name="title_create_account">Yeni Hesap Oluştur</string>
     <string name="hint_full_name">Ad Soyad</string>
@@ -9,28 +20,11 @@
     <string name="hint_email">E-posta</string>
     <string name="hint_password">Şifre</string>
     <string name="hint_confirm_password">Şifre Tekrar</string>
-    <string name="hint_favorite_genres">Favori Müzik Türleri</string>
+    <string name="password_requirements">En az 8 karakter, 1 büyük harf, 1 küçük harf, 1 sayı ve 1 özel karakter</string>
     <string name="btn_register">Kayıt Ol</string>
     <string name="btn_login">Giriş Yap</string>
     <string name="text_already_have_account">Zaten hesabın var mı?</string>
-    
-    <!-- Password Requirements -->
-    <string name="password_requirements">En az 8 karakter, 1 büyük harf, 1 küçük harf, 1 sayı ve 1 özel karakter</string>
-    
-    <!-- Validation Messages -->
-    <string name="error_fill_all_fields">Lütfen tüm alanları doldurun</string>
-    <string name="error_passwords_not_match">Şifreler eşleşmiyor</string>
-    <string name="error_password_requirements">Şifre en az 8 karakter uzunluğunda olmalı ve en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter (@#$%^&amp;+=!) içermelidir</string>
-    <string name="error_registration_failed">Kayıt başarısız: %1$s</string>
-    <string name="error_save_user_data">Kullanıcı bilgileri kaydedilemedi: %1$s</string>
-    <string name="success_registration">Kayıt başarılı!</string>
-    
-    <!-- Login Screen -->
-    <string name="title_login">Giriş</string>
-    <string name="btn_google_sign_in">Google ile Giriş Yap</string>
-    <string name="btn_phone_sign_in">Telefon ile Giriş Yap</string>
     <string name="text_no_account">Hesabın yok mu?</string>
-    <string name="error_login_failed">Giriş başarısız: %1$s</string>
     
     <!-- Phone Authentication -->
     <string name="title_phone_auth">Telefon Doğrulama</string>
@@ -38,14 +32,77 @@
     <string name="hint_verification_code">Doğrulama Kodu</string>
     <string name="btn_send_code">Kod Gönder</string>
     <string name="btn_verify_code">Kodu Doğrula</string>
-    <string name="error_phone_required">Telefon numarası gerekli</string>
-    <string name="error_code_required">Doğrulama kodu gerekli</string>
-    <string name="msg_code_sent">Doğrulama kodu gönderildi</string>
-    <string name="msg_verification_success">Telefon doğrulama başarılı</string>
-    <string name="msg_verification_failed">Doğrulama başarısız: %1$s</string>
+    <string name="btn_google_sign_in">Google ile Giriş Yap</string>
+    <string name="btn_phone_sign_in">Telefon ile Giriş Yap</string>
+    <string name="title_login">Giriş</string>
     
-    <!-- Dialog Messages -->
+    <!-- Main Screen -->
+    <string name="recently_played">Son Çalınanlar</string>
+    <string name="top_genres">En Çok Dinlediğin Türler</string>
+    <string name="your_top_genres">En Çok Dinlediğin Türler</string>
+    <string name="all_songs">Tüm Şarkılar</string>
+    <string name="add_song">Şarkı Ekle</string>
+    <string name="search_hint">Şarkı, sanatçı, albüm ara</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Ana Sayfa</string>
+    <string name="nav_search">Ara</string>
+    <string name="nav_library">Kütüphane</string>
+    <string name="nav_profile">Profil</string>
+    
+    <!-- Song Details -->
+    <string name="song_details">Şarkı Detayları</string>
+    <string name="song_title">Başlık</string>
+    <string name="song_artist">Sanatçı</string>
+    <string name="song_album">Albüm</string>
+    <string name="song_genre">Tür</string>
+    <string name="song_year">Yıl</string>
+    <string name="save_button">Kaydet</string>
+    <string name="delete_button">Sil</string>
+    <string name="hint_favorite_genres">Favori müzik türleriniz</string>
+    <string name="hint_song_title">Şarkı başlığını girin</string>
+    <string name="hint_artist_name">Sanatçı adını girin</string>
+    <string name="hint_album_name">Albüm adını girin</string>
+    <string name="hint_genre">Türü girin</string>
+    <string name="hint_year">Yılı girin</string>
+    <string name="btn_save">Kaydet</string>
+    
+    <!-- Messages -->
+    <string name="loading">Yükleniyor…</string>
+    <string name="error_occurred">Bir hata oluştu</string>
+    <string name="success">Başarılı</string>
+    <string name="song_added">Şarkı başarıyla eklendi</string>
+    <string name="song_deleted">Şarkı başarıyla silindi</string>
+    <string name="song_updated">Şarkı başarıyla güncellendi</string>
     <string name="service_unavailable">Servis Kullanım Dışı</string>
     <string name="phone_auth_unavailable_message">Telefon doğrulama servisi geçici olarak kullanım dışıdır. Lütfen e-posta veya Google girişi kullanın.</string>
     <string name="btn_ok">Tamam</string>
+    <string name="albums_added_successfully">Twenty One Pilots albümleri başarıyla eklendi!</string>
+    
+    <!-- Error Messages -->
+    <string name="error_fill_all_fields">Lütfen tüm alanları doldurun</string>
+    <string name="error_passwords_not_match">Şifreler eşleşmiyor</string>
+    <string name="error_password_requirements">Şifre gereksinimleri karşılanmıyor</string>
+    <string name="error_save_user_data">Kullanıcı verileri kaydedilemedi: %1$s</string>
+    <string name="error_registration_failed">Kayıt başarısız: %1$s</string>
+    <string name="error_login_failed">Giriş başarısız: %1$s</string>
+    <string name="error_phone_required">Telefon numarası gerekli</string>
+    <string name="error_code_required">Doğrulama kodu gerekli</string>
+    
+    <!-- Success Messages -->
+    <string name="success_registration">Kayıt başarılı</string>
+    <string name="msg_verification_success">Telefon doğrulama başarılı</string>
+    <string name="msg_verification_failed">Doğrulama başarısız: %1$s</string>
+    <string name="msg_code_sent">Doğrulama kodu gönderildi</string>
+    
+    <!-- Profile Screen -->
+    <string name="profile_title">Profil</string>
+    <string name="change_photo">Fotoğrafı Değiştir</string>
+    <string name="save_profile">Profili Kaydet</string>
+    <string name="logout">Çıkış Yap</string>
+    <string name="profile_updated">Profil başarıyla güncellendi</string>
+    <string name="error_update_profile">Profil güncellenemedi: %1$s</string>
+    <string name="confirm_logout">Çıkış yapmak istediğinizden emin misiniz?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
 </resources> 

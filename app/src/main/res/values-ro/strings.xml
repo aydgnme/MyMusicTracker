@@ -2,50 +2,107 @@
 <resources>
     <string name="app_name">MyMusicTracker</string>
     
+    <!-- Login Screen -->
+    <string name="login_title">Bine ați venit la MyMusicTracker</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Parolă</string>
+    <string name="login_button">Conectare</string>
+    <string name="register_button">Înregistrare</string>
+    <string name="forgot_password">Ai uitat parola?</string>
+    <string name="remember_me">Ține-mă minte</string>
+    <string name="google_sign_in">Conectare cu Google</string>
+    <string name="phone_sign_in">Conectare cu telefonul</string>
+    
     <!-- Registration Screen -->
-    <string name="title_create_account">Creează Cont Nou</string>
-    <string name="hint_full_name">Nume Complet</string>
-    <string name="hint_username">Nume Utilizator</string>
+    <string name="title_create_account">Creează cont nou</string>
+    <string name="hint_full_name">Nume complet</string>
+    <string name="hint_username">Nume utilizator</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Parolă</string>
-    <string name="hint_confirm_password">Confirmă Parola</string>
-    <string name="hint_favorite_genres">Genuri Muzicale Preferate</string>
-    <string name="btn_register">Înregistrare</string>
-    <string name="btn_login">Autentificare</string>
-    <string name="text_already_have_account">Ai deja un cont?</string>
-    
-    <!-- Password Requirements -->
+    <string name="hint_confirm_password">Confirmă parola</string>
     <string name="password_requirements">Minim 8 caractere, 1 majusculă, 1 minusculă, 1 cifră și 1 caracter special</string>
-    
-    <!-- Validation Messages -->
-    <string name="error_fill_all_fields">Vă rugăm completați toate câmpurile</string>
-    <string name="error_passwords_not_match">Parolele nu se potrivesc</string>
-    <string name="error_password_requirements">Parola trebuie să aibă minim 8 caractere și să conțină cel puțin o literă mare, o literă mică, o cifră și un caracter special (@#$%^&amp;+=!)</string>
-    <string name="error_registration_failed">Înregistrare eșuată: %1$s</string>
-    <string name="error_save_user_data">Salvarea datelor utilizatorului a eșuat: %1$s</string>
-    <string name="success_registration">Înregistrare reușită!</string>
-    
-    <!-- Login Screen -->
-    <string name="title_login">Autentificare</string>
-    <string name="btn_google_sign_in">Conectare cu Google</string>
-    <string name="btn_phone_sign_in">Conectare cu Telefonul</string>
+    <string name="btn_register">Înregistrare</string>
+    <string name="btn_login">Conectare</string>
+    <string name="text_already_have_account">Ai deja un cont?</string>
     <string name="text_no_account">Nu ai cont?</string>
-    <string name="error_login_failed">Autentificare eșuată: %1$s</string>
     
     <!-- Phone Authentication -->
-    <string name="title_phone_auth">Autentificare cu Telefon</string>
-    <string name="hint_phone_number">Număr de Telefon</string>
-    <string name="hint_verification_code">Cod de Verificare</string>
-    <string name="btn_send_code">Trimite Codul</string>
-    <string name="btn_verify_code">Verifică Codul</string>
-    <string name="error_phone_required">Numărul de telefon este obligatoriu</string>
-    <string name="error_code_required">Codul de verificare este obligatoriu</string>
-    <string name="msg_code_sent">Cod de verificare trimis</string>
-    <string name="msg_verification_success">Verificare telefonică reușită</string>
-    <string name="msg_verification_failed">Verificare eșuată: %1$s</string>
+    <string name="title_phone_auth">Autentificare cu telefon</string>
+    <string name="hint_phone_number">Număr de telefon</string>
+    <string name="hint_verification_code">Cod de verificare</string>
+    <string name="btn_send_code">Trimite codul</string>
+    <string name="btn_verify_code">Verifică codul</string>
+    <string name="btn_google_sign_in">Conectare cu Google</string>
+    <string name="btn_phone_sign_in">Conectare cu telefonul</string>
+    <string name="title_login">Conectare</string>
     
-    <!-- Dialog Messages -->
+    <!-- Main Screen -->
+    <string name="recently_played">Redate recent</string>
+    <string name="top_genres">Genurile tale preferate</string>
+    <string name="your_top_genres">Genurile tale preferate</string>
+    <string name="all_songs">Toate melodiile</string>
+    <string name="add_song">Adaugă melodie</string>
+    <string name="search_hint">Caută melodii, artiști, albume</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Acasă</string>
+    <string name="nav_search">Căutare</string>
+    <string name="nav_library">Bibliotecă</string>
+    <string name="nav_profile">Profil</string>
+    
+    <!-- Song Details -->
+    <string name="song_details">Detalii melodie</string>
+    <string name="song_title">Titlu</string>
+    <string name="song_artist">Artist</string>
+    <string name="song_album">Album</string>
+    <string name="song_genre">Gen</string>
+    <string name="song_year">An</string>
+    <string name="save_button">Salvează</string>
+    <string name="delete_button">Șterge</string>
+    <string name="hint_favorite_genres">Genurile tale muzicale preferate</string>
+    <string name="hint_song_title">Introduceți titlul melodiei</string>
+    <string name="hint_artist_name">Introduceți numele artistului</string>
+    <string name="hint_album_name">Introduceți numele albumului</string>
+    <string name="hint_genre">Introduceți genul</string>
+    <string name="hint_year">Introduceți anul</string>
+    <string name="btn_save">Salvează</string>
+    
+    <!-- Messages -->
+    <string name="loading">Se încarcă…</string>
+    <string name="error_occurred">A apărut o eroare</string>
+    <string name="success">Succes</string>
+    <string name="song_added">Melodie adăugată cu succes</string>
+    <string name="song_deleted">Melodie ștearsă cu succes</string>
+    <string name="song_updated">Melodie actualizată cu succes</string>
     <string name="service_unavailable">Serviciu Indisponibil</string>
     <string name="phone_auth_unavailable_message">Serviciul de autentificare prin telefon este temporar indisponibil. Vă rugăm să utilizați autentificarea prin email sau Google.</string>
     <string name="btn_ok">OK</string>
+    <string name="albums_added_successfully">Albumele Twenty One Pilots au fost adăugate cu succes!</string>
+    
+    <!-- Error Messages -->
+    <string name="error_fill_all_fields">Vă rugăm să completați toate câmpurile</string>
+    <string name="error_passwords_not_match">Parolele nu se potrivesc</string>
+    <string name="error_password_requirements">Parola nu îndeplinește cerințele</string>
+    <string name="error_save_user_data">Salvarea datelor utilizatorului a eșuat: %1$s</string>
+    <string name="error_registration_failed">Înregistrarea a eșuat: %1$s</string>
+    <string name="error_login_failed">Conectarea a eșuat: %1$s</string>
+    <string name="error_phone_required">Numărul de telefon este obligatoriu</string>
+    <string name="error_code_required">Codul de verificare este obligatoriu</string>
+    
+    <!-- Success Messages -->
+    <string name="success_registration">Înregistrare reușită</string>
+    <string name="msg_verification_success">Verificarea telefonului reușită</string>
+    <string name="msg_verification_failed">Verificarea a eșuat: %1$s</string>
+    <string name="msg_code_sent">Cod de verificare trimis</string>
+    
+    <!-- Profile Screen -->
+    <string name="profile_title">Profil</string>
+    <string name="change_photo">Schimbă fotografia</string>
+    <string name="save_profile">Salvează profilul</string>
+    <string name="logout">Deconectare</string>
+    <string name="profile_updated">Profil actualizat cu succes</string>
+    <string name="error_update_profile">Actualizarea profilului a eșuat: %1$s</string>
+    <string name="confirm_logout">Sigur doriți să vă deconectați?</string>
+    <string name="yes">Da</string>
+    <string name="no">Nu</string>
 </resources> 
