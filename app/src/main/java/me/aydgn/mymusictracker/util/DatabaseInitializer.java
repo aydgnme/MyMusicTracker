@@ -1,5 +1,7 @@
 package me.aydgn.mymusictracker.util;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
@@ -7,49 +9,44 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import me.aydgn.mymusictracker.model.Song;
 
 public class DatabaseInitializer {
     private static final String TAG = "DatabaseInitializer";
     private static final String DEFAULT_ALBUM_ART_URL = "https://raw.githubusercontent.com/aydgnme/MyMusicTracker/main/app/src/main/res/drawable/ic_album_placeholder.xml";
+    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private static final Handler mainHandler = new Handler(Looper.getMainLooper());
 
-    public static void clearDatabase() {
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
-        databaseRef.removeValue()
-            .addOnSuccessListener(aVoid -> {
-                Log.d(TAG, "Veritabanı başarıyla temizlendi");
-                initializeDatabase();
-            })
-            .addOnFailureListener(e -> Log.e(TAG, "Veritabanı temizlenirken hata: " + e.getMessage()));
+    public static void clearSongsTable() {
+        executor.execute(() -> {
+            DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+            databaseRef.child("songs").removeValue()
+                .addOnSuccessListener(aVoid -> {
+                    mainHandler.post(() -> {
+                        Log.d(TAG, "Songs tablosu başarıyla temizlendi");
+                        initializeDatabase();
+                    });
+                })
+                .addOnFailureListener(e -> mainHandler.post(() -> 
+                    Log.e(TAG, "Songs tablosu temizlenirken hata: " + e.getMessage())
+                ));
+        });
     }
 
     public static void initializeDatabase() {
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
-        List<Song> songs = new ArrayList<>();
-
-        // Örnek şarkıları ekle
-        addTaylorSwiftAlbums(songs);
-        addArianaGrandeAlbums(songs);
-        addTheWeekndAlbums(songs);
-        addMetallicaAlbums(songs);
-        addIronMaidenAlbums(songs);
-        addEminemAlbums(songs);
-        addKendrickLamarAlbums(songs);
-        addDaftPunkAlbums(songs);
-        addAviciiAlbums(songs);
-        addBeyonceAlbums(songs);
-        addFrankOceanAlbums(songs);
-
-        // Şarkıları Firebase'e yükle
-        for (Song song : songs) {
-            String songId = databaseRef.child("songs").push().getKey();
-            if (songId != null) {
-                databaseRef.child("songs").child(songId).setValue(song)
-                    .addOnSuccessListener(aVoid -> Log.d(TAG, "Şarkı eklendi: " + song.getTitle()))
-                    .addOnFailureListener(e -> Log.e(TAG, "Şarkı eklenirken hata: " + e.getMessage()));
-            }
-        }
+        executor.execute(() -> {
+            DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+            databaseRef.child("songs").removeValue()
+                .addOnSuccessListener(aVoid -> mainHandler.post(() -> 
+                    Log.d(TAG, "Tüm şarkılar başarıyla silindi")
+                ))
+                .addOnFailureListener(e -> mainHandler.post(() -> 
+                    Log.e(TAG, "Şarkılar silinirken hata: " + e.getMessage())
+                ));
+        });
     }
 
     private static void addTaylorSwiftAlbums(List<Song> songs) {
@@ -173,12 +170,12 @@ public class DatabaseInitializer {
         addAlbum(songs, titles, "Blonde", "Frank Ocean", "R&B", 2016);
     }
 
-    private static void addAlbum(List<Song> songs, String[] titles, String album,
-                               String artist, String genre, int year) {
+    private static void addAlbum(List<Song> songs, String[] titles, String album, String artist, String genre, int year) {
         String albumId = album.toLowerCase().replace(" ", "_") + "_" + year;
 
         for (int i = 0; i < titles.length; i++) {
-            Song song = new Song(null, titles[i], artist, album, albumId, genre, DEFAULT_ALBUM_ART_URL, i + 1, 180);
+            String duration = "3:00";
+            Song song = new Song(null, titles[i], artist, album, albumId, genre, DEFAULT_ALBUM_ART_URL, i + 1, duration);
             songs.add(song);
         }
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -65,7 +66,20 @@ public class MainActivity extends AppCompatActivity {
         // Setup bottom navigation
         setupBottomNavigation();
 
-        // Load songs
+        // Adaptörleri başlat
+        recentlyPlayedAdapter = new SongAdapter(this, new ArrayList<Song>(), song -> {
+            Intent intent = new Intent(this, SongDetailActivity.class);
+            intent.putExtra("song_id", song.getId());
+            startActivity(intent);
+        });
+
+        allSongsAdapter = new SongAdapter(this, new ArrayList<Song>(), song -> {
+            Intent intent = new Intent(this, SongDetailActivity.class);
+            intent.putExtra("song_id", song.getId());
+            startActivity(intent);
+        });
+
+        // Firebase'den şarkıları yükle
         loadSongs();
     }
 
@@ -74,13 +88,11 @@ public class MainActivity extends AppCompatActivity {
         recentlyPlayedRecyclerView = findViewById(R.id.recentlyPlayedRecyclerView);
         recentlyPlayedRecyclerView.setLayoutManager(
             new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recentlyPlayedAdapter = new SongAdapter(new ArrayList<>());
         recentlyPlayedRecyclerView.setAdapter(recentlyPlayedAdapter);
 
         // All Songs
         allSongsRecyclerView = findViewById(R.id.allSongsRecyclerView);
         allSongsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        allSongsAdapter = new SongAdapter(new ArrayList<>());
         allSongsRecyclerView.setAdapter(allSongsAdapter);
     }
 
@@ -109,10 +121,14 @@ public class MainActivity extends AppCompatActivity {
                 executorService.execute(() -> {
                     List<Song> songs = new ArrayList<>();
                     for (DataSnapshot songSnapshot : snapshot.getChildren()) {
-                        Song song = songSnapshot.getValue(Song.class);
-                        if (song != null) {
-                            song.setId(songSnapshot.getKey());
-                            songs.add(song);
+                        try {
+                            Song song = songSnapshot.getValue(Song.class);
+                            if (song != null) {
+                                song.setId(songSnapshot.getKey());
+                                songs.add(song);
+                            }
+                        } catch (Exception e) {
+                            Log.e("MainActivity", "Error parsing song: " + songSnapshot.getValue(), e);
                         }
                     }
                     

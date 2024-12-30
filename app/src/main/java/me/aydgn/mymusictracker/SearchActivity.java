@@ -56,7 +56,14 @@ public class SearchActivity extends AppCompatActivity {
 
         // Setup RecyclerView
         searchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        songAdapter = new SongAdapter(new ArrayList<>());
+        
+        songAdapter = new SongAdapter(this, new ArrayList<>(), song -> {
+            // Şarkıya tıklandığında yapılacak işlemler
+            Intent intent = new Intent(SearchActivity.this, SongDetailActivity.class);
+            intent.putExtra("song_id", song.getId());
+            startActivity(intent);
+        });
+        
         searchResultsRecyclerView.setAdapter(songAdapter);
 
         // Load all songs initially

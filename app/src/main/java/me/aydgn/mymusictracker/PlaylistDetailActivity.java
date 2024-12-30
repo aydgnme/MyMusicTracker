@@ -1,5 +1,6 @@
 package me.aydgn.mymusictracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -61,7 +62,12 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         // RecyclerView'ı ayarla
         recyclerView = findViewById(R.id.songsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new SongAdapter(new ArrayList<>());
+        adapter = new SongAdapter(this, new ArrayList<>(), song -> {
+            // Şarkıya tıklandığında yapılacak işlemler
+            Intent intent = new Intent(PlaylistDetailActivity.this, SongDetailActivity.class);
+            intent.putExtra("song_id", song.getId());
+            startActivity(intent);
+        });
         recyclerView.setAdapter(adapter);
 
         // Şarkıları yükle

@@ -1,5 +1,6 @@
 package me.aydgn.mymusictracker.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import java.util.List;
 import me.aydgn.mymusictracker.R;
 import me.aydgn.mymusictracker.adapter.SongAdapter;
 import me.aydgn.mymusictracker.model.Song;
+import me.aydgn.mymusictracker.SongDetailActivity;
 
 public class FavoritesFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -37,7 +39,11 @@ public class FavoritesFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.favoritesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        songAdapter = new SongAdapter(new ArrayList<>());
+        songAdapter = new SongAdapter(getContext(), new ArrayList<>(), song -> {
+            Intent intent = new Intent(getContext(), SongDetailActivity.class);
+            intent.putExtra("song_id", song.getId());
+            startActivity(intent);
+        });
         recyclerView.setAdapter(songAdapter);
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();

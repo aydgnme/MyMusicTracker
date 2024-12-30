@@ -9,14 +9,14 @@ public class Song {
     private String genre;
     private String albumArtUrl;
     private int trackNumber;
-    private int duration;
+    private String duration;
 
     public Song() {
         // Firebase için boş constructor
     }
 
     public Song(String id, String title, String artist, String album, String albumId,
-               String genre, String albumArtUrl, int trackNumber, int duration) {
+               String genre, String albumArtUrl, int trackNumber, String duration) {
         this.id = id;
         this.title = title;
         this.artist = artist;
@@ -92,11 +92,18 @@ public class Song {
         this.trackNumber = trackNumber;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public int getDurationInSeconds() {
+        String[] parts = duration.split(":");
+        int minutes = Integer.parseInt(parts[0]);
+        int seconds = Integer.parseInt(parts[1]);
+        return minutes * 60 + seconds;
     }
 } 
