@@ -1,5 +1,6 @@
 package me.aydgn.mymusictracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -103,6 +104,9 @@ public class PlaylistDetailActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.action_delete_playlist) {
             showDeleteConfirmationDialog();
+            return true;
+        } else if (item.getItemId() == R.id.action_share_playlist) {
+            sharePlaylist();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -299,5 +303,57 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         } else {
             adapter.updateSongs(new ArrayList<>());
         }
+    }
+
+    private void sharePlaylist() {
+        if (currentPlaylist == null) return;
+
+        StringBuilder shareText = new StringBuilder();
+        shareText.append("Check out my playlist: ").append(currentPlaylist.getName()).append("\n\n");
+        shareText.append("Songs:\n");
+
+        String userId = mAuth.getCurrentUser().getUid();
+        DatabaseReference albumsRef = databaseRef.child("albums");
+        
+        albumsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot albumsSnapshot) {
+                Map<String, Boolean> playlistSongs = currentPlaylist.getSongs();
+                if (playlistSongs != null && !playlistSongs.isEmpty()) {
+                    for (DataSnapshot albumSnapshot : albumsSnapshot.getChildren()) {
+                        DataSnapshot songsSnapshot = albumSnapshot.child("songs");
+                        String artist = albumSnapshot.child("artist").getValue(String.class);
+                        
+                        for (String songId : playlistSongs.keySet()) {
+                            DataSnapshot songSnapshot = songsSnapshot.child(songId);
+                            if (songSnapshot.exists()) {
+                                String title = songSnapshot.child("title").getValue(String.class);
+                                if (title != null && artist != null) {
+                                    shareText.append("- ").append(title)
+                                            .append(" by ").append(artist)
+                                            .append("\n");
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Paylaşım intent'ini oluştur
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentPlaylist.getName());
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareText.toString());
+
+                // Paylaşım menüsünü göster
+                startActivity(Intent.createChooser(shareIntent, "Share Playlist Via"));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(PlaylistDetailActivity.this, 
+                    "Error sharing playlist: " + error.getMessage(), 
+                    Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 } 

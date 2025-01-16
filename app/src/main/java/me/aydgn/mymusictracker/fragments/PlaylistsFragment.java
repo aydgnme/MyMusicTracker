@@ -1,6 +1,7 @@
 package me.aydgn.mymusictracker.fragments;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import java.util.List;
 import me.aydgn.mymusictracker.R;
 import me.aydgn.mymusictracker.adapter.PlaylistAdapter;
 import me.aydgn.mymusictracker.model.Playlist;
+import me.aydgn.mymusictracker.PlaylistDetailActivity;
 
 public class PlaylistsFragment extends Fragment implements PlaylistAdapter.OnPlaylistClickListener {
     private RecyclerView recyclerView;
@@ -43,18 +45,19 @@ public class PlaylistsFragment extends Fragment implements PlaylistAdapter.OnPla
 
         // Setup RecyclerView
         recyclerView = view.findViewById(R.id.playlistsRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new PlaylistAdapter(new ArrayList<>(), this);
-        recyclerView.setAdapter(adapter);
-
-        // Load playlists
-        loadPlaylists();
+        setupRecyclerView();
 
         // Add new playlist button
         FloatingActionButton fabAddPlaylist = view.findViewById(R.id.fabAddPlaylist);
         fabAddPlaylist.setOnClickListener(v -> showCreatePlaylistDialog());
 
         return view;
+    }
+
+    private void setupRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new PlaylistAdapter(requireContext(), new ArrayList<>(), this);
+        recyclerView.setAdapter(adapter);
     }
 
     private void loadPlaylists() {
@@ -87,7 +90,9 @@ public class PlaylistsFragment extends Fragment implements PlaylistAdapter.OnPla
 
     @Override
     public void onPlaylistClick(Playlist playlist) {
-        // Handle playlist click
+        Intent intent = new Intent(getContext(), PlaylistDetailActivity.class);
+        intent.putExtra("playlist_id", playlist.getId());
+        startActivity(intent);
     }
 
     @Override

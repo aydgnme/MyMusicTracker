@@ -89,19 +89,7 @@ public class ProfileFragment extends Fragment implements PlaylistAdapter.OnPlayl
 
         // Playlists RecyclerView
         playlistsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        playlistAdapter = new PlaylistAdapter(new ArrayList<>(), new PlaylistAdapter.OnPlaylistClickListener() {
-            @Override
-            public void onPlaylistClick(Playlist playlist) {
-                Intent intent = new Intent(getContext(), PlaylistDetailActivity.class);
-                intent.putExtra("playlist_id", playlist.getId());
-                startActivity(intent);
-            }
-
-            @Override
-            public void onPlaylistLongClick(Playlist playlist) {
-                // Handle long click actions here if needed
-            }
-        });
+        playlistAdapter = new PlaylistAdapter(requireContext(), new ArrayList<>(), this);
         playlistsRecyclerView.setAdapter(playlistAdapter);
     }
 
@@ -231,7 +219,9 @@ public class ProfileFragment extends Fragment implements PlaylistAdapter.OnPlayl
 
     @Override
     public void onPlaylistClick(Playlist playlist) {
-        // Actions to perform when playlist is clicked
+        Intent intent = new Intent(getContext(), PlaylistDetailActivity.class);
+        intent.putExtra("playlist_id", playlist.getId());
+        startActivity(intent);
     }
 
     @Override
