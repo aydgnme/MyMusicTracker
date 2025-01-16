@@ -63,15 +63,6 @@
             android:textColor="@color/spotify_light_gray"
             android:gravity="center"/>
 
-        <TextView
-            android:id="@+id/genreTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="14sp"
-            android:textColor="@color/spotify_light_gray"
-            android:gravity="center"/>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addToFavoritesButton"
             android:layout_width="match_parent"

@@ -9,7 +9,7 @@ public class Album {
     private String genre;
 
     public Album() {
-        // Firebase için boş constructor
+        // Empty constructor for Firebase
     }
 
     public Album(String id, String title, String artist, String albumArtUrl, long releaseDate, String genre) {

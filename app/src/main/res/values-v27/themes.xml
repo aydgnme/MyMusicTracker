@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MyMusicTracker" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- System bars -->
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:navigationBarColor">@color/spotify_black</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+    </style>
+</resources>

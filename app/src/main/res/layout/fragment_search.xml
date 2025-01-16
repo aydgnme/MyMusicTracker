@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/spotify_black">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Search songs, artists, or albums"
+        app:startIconDrawable="@drawable/ic_search"
+        app:startIconTint="@color/spotify_white"
+        app:hintTextColor="@color/spotify_green"
+        app:boxStrokeColor="@color/spotify_green"
+        app:boxBackgroundColor="@color/spotify_dark_gray"
+        android:textColorHint="@color/spotify_white"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/spotify_white"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/emptyStateText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:alpha="0.7"
+        android:gravity="center"
+        android:text="Use the search bar above to search for music"
+        android:textColor="@color/spotify_white"
+        android:textSize="16sp"
+        android:visibility="visible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchResultsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+</LinearLayout> 

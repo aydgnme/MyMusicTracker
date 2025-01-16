@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme -->
-    <style name="Theme.MyMusicTracker" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.MyMusicTracker" parent="Theme.MaterialComponents.NoActionBar">
+        <!-- Primary brand color -->
         <item name="colorPrimary">@color/spotify_green</item>
         <item name="colorPrimaryVariant">@color/spotify_green</item>
         <item name="colorOnPrimary">@color/spotify_white</item>
+        <!-- Secondary brand color -->
         <item name="colorSecondary">@color/spotify_dark_gray</item>
         <item name="colorSecondaryVariant">@color/spotify_dark_gray</item>
         <item name="colorOnSecondary">@color/spotify_white</item>
+        <!-- Background colors -->
         <item name="android:colorBackground">@color/spotify_black</item>
         <item name="colorSurface">@color/spotify_dark_gray</item>
-        <item name="colorError">#CF6679</item>
         <item name="colorOnBackground">@color/spotify_white</item>
         <item name="colorOnSurface">@color/spotify_white</item>
+        <!-- Error colors -->
+        <item name="colorError">#CF6679</item>
         <item name="colorOnError">@color/spotify_black</item>
-        <!-- Status bar color -->
+        <!-- System bars -->
         <item name="android:statusBarColor">@color/spotify_black</item>
         <item name="android:windowLightStatusBar">false</item>
-        <!-- Navigation bar color -->
-        <item name="android:navigationBarColor">@color/spotify_dark_gray</item>
-        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:navigationBarColor">@color/spotify_black</item>
+        <!-- Material Theme overrides -->
+        <item name="android:windowBackground">@color/spotify_black</item>
+        <item name="android:itemBackground">@color/spotify_black</item>
+        <item name="android:textColorPrimary">@color/spotify_white</item>
+        <item name="android:textColorSecondary">@color/spotify_light_gray</item>
+        <item name="materialButtonStyle">@style/Widget.MyMusicTracker.Button</item>
+        <item name="textInputStyle">@style/Widget.MyMusicTracker.TextInputLayout</item>
+        <!-- Force dark theme -->
+        <item name="android:forceDarkAllowed">true</item>
     </style>
 </resources>

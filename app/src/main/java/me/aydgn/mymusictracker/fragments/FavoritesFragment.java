@@ -32,6 +32,7 @@ public class FavoritesFragment extends Fragment {
     private SongAdapter songAdapter;
     private DatabaseReference databaseRef;
     private String userId;
+    private ValueEventListener favoritesListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,11 +40,7 @@ public class FavoritesFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.favoritesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        songAdapter = new SongAdapter(getContext(), new ArrayList<>(), song -> {
-            Intent intent = new Intent(getContext(), SongDetailActivity.class);
-            intent.putExtra("song_id", song.getId());
-            startActivity(intent);
-        });
+        songAdapter = new SongAdapter(getContext(), new ArrayList<>());
         recyclerView.setAdapter(songAdapter);
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -55,46 +52,74 @@ public class FavoritesFragment extends Fragment {
     }
 
     private void loadFavorites() {
-        databaseRef.child("users").child(userId).child("favorites")
-                .addValueEventListener(new ValueEventListener() {
+        DatabaseReference favoritesRef = databaseRef.child("users").child(userId).child("favorites");
+        favoritesListener = favoritesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Song> favoriteSongs = new ArrayList<>();
+                List<String> favoriteSongIds = new ArrayList<>();
+                
+                // Get favorite song IDs
+                for (DataSnapshot favoriteSnapshot : snapshot.getChildren()) {
+                    // Using songId directly as key
+                    String songId = favoriteSnapshot.getKey();
+                    if (songId != null) {
+                        favoriteSongIds.add(songId);
+                    }
+                }
+                
+                if (favoriteSongIds.isEmpty()) {
+                    songAdapter.updateSongs(favoriteSongs);
+                    Toast.makeText(getContext(), "You don't have any favorite songs yet", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
+                // Get song details from albums collection
+                databaseRef.child("albums").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        List<String> favoriteIds = new ArrayList<>();
-                        for (DataSnapshot favoriteSnapshot : snapshot.getChildren()) {
-                            if (Boolean.TRUE.equals(favoriteSnapshot.getValue(Boolean.class))) {
-                                favoriteIds.add(favoriteSnapshot.getKey());
+                    public void onDataChange(@NonNull DataSnapshot albumsSnapshot) {
+                        for (DataSnapshot albumSnapshot : albumsSnapshot.getChildren()) {
+                            String albumTitle = albumSnapshot.child("title").getValue(String.class);
+                            String artist = albumSnapshot.child("artist").getValue(String.class);
+                            String coverUrl = albumSnapshot.child("coverUrl").getValue(String.class);
+                            
+                            DataSnapshot songsSnapshot = albumSnapshot.child("songs");
+                            for (DataSnapshot songSnapshot : songsSnapshot.getChildren()) {
+                                String songId = songSnapshot.getKey();
+                                if (favoriteSongIds.contains(songId)) {
+                                    String title = songSnapshot.child("title").getValue(String.class);
+                                    String duration = songSnapshot.child("duration").getValue(String.class);
+                                    Integer trackNumber = songSnapshot.child("trackNumber").getValue(Integer.class);
+                                    
+                                    if (title != null && duration != null && trackNumber != null) {
+                                        Song song = new Song(songId, title, artist, albumTitle, coverUrl, duration, trackNumber);
+                                        favoriteSongs.add(song);
+                                    }
+                                }
                             }
                         }
-                        loadSongs(favoriteIds);
+                        songAdapter.updateSongs(favoriteSongs);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(getContext(), "Hata: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Error loading song details: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Error loading favorites: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void loadSongs(List<String> songIds) {
-        List<Song> songs = new ArrayList<>();
-        DatabaseReference songsRef = databaseRef.child("songs");
-
-        for (String songId : songIds) {
-            songsRef.child(songId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Song song = snapshot.getValue(Song.class);
-                    if (song != null) {
-                        songs.add(song);
-                        songAdapter.updateSongs(songs);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(getContext(), "Hata: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (favoritesListener != null) {
+            databaseRef.child("users").child(userId).child("favorites").removeEventListener(favoritesListener);
         }
     }
 } 

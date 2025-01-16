@@ -45,4 +45,26 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>
+
+    <style name="roundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <!-- Yeni stil - Dropdown için -->
+    <style name="Widget.MyMusicTracker.AutoCompleteTextView" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/spotify_green</item>
+        <item name="boxBackgroundColor">@color/spotify_dark_gray</item>
+        <item name="android:textColorHint">@color/spotify_light_gray</item>
+        <item name="hintTextColor">@color/spotify_green</item>
+        <item name="android:textColor">@color/spotify_white</item>
+        <item name="android:popupBackground">@color/spotify_dark_gray</item>
+    </style>
+
+    <!-- Dropdown item stil -->
+    <style name="Widget.MyMusicTracker.DropdownItem" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/spotify_white</item>
+        <item name="android:background">@color/spotify_dark_gray</item>
+        <item name="android:padding">16dp</item>
+    </style>
 </resources> 

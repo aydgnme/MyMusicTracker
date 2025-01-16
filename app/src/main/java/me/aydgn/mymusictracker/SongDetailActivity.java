@@ -1,5 +1,10 @@
 package me.aydgn.mymusictracker;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -33,7 +38,7 @@ import java.util.Map;
 import me.aydgn.mymusictracker.model.Playlist;
 import me.aydgn.mymusictracker.model.Song;
 
-public class SongDetailActivity extends AppCompatActivity {
+public class SongDetailActivity extends AppCompatActivity implements SensorEventListener {
     private static final String TAG = "SongDetailActivity";
     private String songId;
     private Song currentSong;
@@ -43,6 +48,11 @@ public class SongDetailActivity extends AppCompatActivity {
     private ShapeableImageView albumArtImageView;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseRef;
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private static final float SHAKE_THRESHOLD = 12f;
+    private long lastUpdate = 0;
+    private float last_x, last_y, last_z;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +62,7 @@ public class SongDetailActivity extends AppCompatActivity {
         // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference();
-        songsRef = databaseRef.child("songs");
+        songsRef = databaseRef.child("albums");
         usersRef = databaseRef.child("users");
         userId = mAuth.getCurrentUser().getUid();
 
@@ -84,25 +94,96 @@ public class SongDetailActivity extends AppCompatActivity {
         addToFavoritesButton.setOnClickListener(v -> addToFavorites());
         createPlaylistButton.setOnClickListener(v -> showCreatePlaylistDialog());
         addToPlaylistButton.setOnClickListener(v -> showPlaylistSelectionDialog());
+
+        // Sensör yöneticisini başlat
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (accelerometer != null) {
+            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (accelerometer != null) {
+            sensorManager.unregisterListener(this);
+        }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            long curTime = System.currentTimeMillis();
+            if ((curTime - lastUpdate) > 100) {
+                long diffTime = (curTime - lastUpdate);
+                lastUpdate = curTime;
+                
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+                
+                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+                
+                if (speed > SHAKE_THRESHOLD) {
+                    // Cihaz sallandığında rastgele bir şarkıya geç
+                    shuffleToRandomSong();
+                }
+                
+                last_x = x;
+                last_y = y;
+                last_z = z;
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // Sensör hassasiyeti değiştiğinde yapılacak işlemler
+    }
+
+    private void shuffleToRandomSong() {
+        // Rastgele şarkı seçme ve geçiş mantığı
+        Toast.makeText(this, "Shake detected! Shuffling to random song...", Toast.LENGTH_SHORT).show();
+        // TODO: Implement random song selection
     }
 
     private void loadSongDetails() {
-        songsRef.child(songId).addListenerForSingleValueEvent(new ValueEventListener() {
+        songsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                currentSong = snapshot.getValue(Song.class);
-                if (currentSong != null) {
-                    currentSong.setId(snapshot.getKey());
-                    updateUI(currentSong);
-                } else {
-                    Toast.makeText(SongDetailActivity.this, "Song not found", Toast.LENGTH_SHORT).show();
-                    finish();
+                for (DataSnapshot albumSnapshot : snapshot.getChildren()) {
+                    DataSnapshot songsSnapshot = albumSnapshot.child("songs");
+                    if (songsSnapshot.hasChild(songId)) {
+                        String albumTitle = albumSnapshot.child("title").getValue(String.class);
+                        String artist = albumSnapshot.child("artist").getValue(String.class);
+                        String coverUrl = albumSnapshot.child("coverUrl").getValue(String.class);
+                        
+                        DataSnapshot songSnapshot = songsSnapshot.child(songId);
+                        String title = songSnapshot.child("title").getValue(String.class);
+                        String duration = songSnapshot.child("duration").getValue(String.class);
+                        Integer trackNumber = songSnapshot.child("trackNumber").getValue(Integer.class);
+                        
+                        if (title != null && duration != null && trackNumber != null) {
+                            currentSong = new Song(songId, title, artist, albumTitle, coverUrl, duration, trackNumber);
+                            updateUI(currentSong);
+                            return;
+                        }
+                    }
                 }
+                Toast.makeText(SongDetailActivity.this, "Song not found", Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(SongDetailActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -111,13 +192,12 @@ public class SongDetailActivity extends AppCompatActivity {
         ((android.widget.TextView) findViewById(R.id.titleTextView)).setText(song.getTitle());
         ((android.widget.TextView) findViewById(R.id.artistTextView)).setText(song.getArtist());
         ((android.widget.TextView) findViewById(R.id.albumTextView)).setText(song.getAlbum());
-        ((android.widget.TextView) findViewById(R.id.genreTextView)).setText(song.getGenre());
 
         // Load album art with logging
-        if (song.getAlbumArtUrl() != null && !song.getAlbumArtUrl().isEmpty()) {
-            Log.d(TAG, "Loading album art from URL: " + song.getAlbumArtUrl());
+        if (song.getAlbumCoverUrl() != null && !song.getAlbumCoverUrl().isEmpty()) {
+            Log.d(TAG, "Loading album art from URL: " + song.getAlbumCoverUrl());
             Picasso.get()
-                .load(song.getAlbumArtUrl())
+                .load(song.getAlbumCoverUrl())
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.ic_album_placeholder)
@@ -184,7 +264,7 @@ public class SongDetailActivity extends AppCompatActivity {
             playlist.put("name", playlistName);
             playlist.put("createdAt", System.currentTimeMillis());
 
-            // Güvenli şarkı ID'si oluştur
+            // Generate safe song ID
             String safeSongId = currentSong.getId().replaceAll("[.#$\\[\\]/]", "_");
             Map<String, Object> songs = new HashMap<>();
             songs.put(safeSongId, true);
@@ -208,7 +288,8 @@ public class SongDetailActivity extends AppCompatActivity {
                     String playlistId = playlistSnapshot.getKey();
                     String name = playlistSnapshot.child("name").getValue(String.class);
                     if (name != null) {
-                        playlists.add(new Playlist(playlistId, name));
+                        String currentUserId = mAuth.getCurrentUser().getUid();
+                        playlists.add(new Playlist(playlistId, name, currentUserId));
                     }
                 }
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="@color/spotify_dark_gray"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/playlistCoverImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_album_art"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundedImageView" />
+
+        <TextView
+            android:id="@+id/playlistNameText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/spotify_white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/songCountText"
+            app:layout_constraintStart_toEndOf="@+id/playlistCoverImage"
+            app:layout_constraintTop_toTopOf="@+id/playlistCoverImage" />
+
+        <TextView
+            android:id="@+id/createdByText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/spotify_light_gray"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/playlistNameText"
+            app:layout_constraintStart_toStartOf="@+id/playlistNameText"
+            app:layout_constraintTop_toBottomOf="@+id/playlistNameText" />
+
+        <TextView
+            android:id="@+id/songCountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/spotify_light_gray"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/playlistNameText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView> 

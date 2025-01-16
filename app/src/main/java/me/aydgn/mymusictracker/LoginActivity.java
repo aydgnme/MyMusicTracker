@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -19,19 +20,30 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.FirebaseUser;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import androidx.annotation.Nullable;
+import android.widget.CheckBox;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextInputEditText emailInput;
     private TextInputEditText passwordInput;
-    private MaterialCheckBox rememberMeCheckbox;
+    private CheckBox rememberMeCheckBox;
     private SharedPreferences sharedPreferences;
-    private static final String PREF_NAME = "LoginPrefs";
-    private static final String KEY_REMEMBER_ME = "rememberMe";
+    private static final String PREF_NAME = "login_pref";
+    private static final String KEY_REMEMBER_ME = "remember_me";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_LOGIN_TYPE = "login_type";
+    private static final String LOGIN_TYPE_EMAIL = "email";
+    private static final String LOGIN_TYPE_GOOGLE = "google";
+    private static final String KEY_GOOGLE_TOKEN = "google_token";
     private GoogleSignInClient googleSignInClient;
     private ActivityResultLauncher<Intent> googleSignInLauncher;
+    private ProgressDialog progressDialog;
+    private static final int RC_SIGN_IN = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,22 +61,9 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Initialize views
-        emailInput = findViewById(R.id.emailInput);
-        passwordInput = findViewById(R.id.passwordInput);
-        rememberMeCheckbox = findViewById(R.id.checkboxRememberMe);
-        MaterialButton loginButton = findViewById(R.id.loginButton);
-        MaterialButton googleSignInButton = findViewById(R.id.googleSignInButton);
-        MaterialButton phoneSignInButton = findViewById(R.id.phoneSignInButton);
-        MaterialButton registerButton = findViewById(R.id.registerButton);
-
-        // Load saved credentials
-        if (sharedPreferences.getBoolean(KEY_REMEMBER_ME, false)) {
-            emailInput.setText(sharedPreferences.getString(KEY_EMAIL, ""));
-            passwordInput.setText(sharedPreferences.getString(KEY_PASSWORD, ""));
-            rememberMeCheckbox.setChecked(true);
-            loginWithSavedCredentials();
-        }
+        initializeViews();
+        checkRememberedUser();
+        setupClickListeners();
 
         // Initialize Google Sign In Launcher
         googleSignInLauncher = registerForActivityResult(
@@ -83,12 +82,41 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         );
+    }
 
-        // Set click listeners
-        loginButton.setOnClickListener(v -> handleLogin());
-        googleSignInButton.setOnClickListener(v -> handleGoogleSignIn());
-        phoneSignInButton.setOnClickListener(v -> handlePhoneSignIn());
-        registerButton.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));
+    private void initializeViews() {
+        emailInput = findViewById(R.id.emailInput);
+        passwordInput = findViewById(R.id.passwordInput);
+        rememberMeCheckBox = findViewById(R.id.checkboxRememberMe);
+    }
+
+    private void checkRememberedUser() {
+        if (sharedPreferences.getBoolean(KEY_REMEMBER_ME, false)) {
+            String loginType = sharedPreferences.getString(KEY_LOGIN_TYPE, "");
+            if (LOGIN_TYPE_EMAIL.equals(loginType)) {
+                String savedEmail = sharedPreferences.getString(KEY_EMAIL, "");
+                String savedPassword = sharedPreferences.getString(KEY_PASSWORD, "");
+                emailInput.setText(savedEmail);
+                passwordInput.setText(savedPassword);
+                rememberMeCheckBox.setChecked(true);
+                // Automatic login with email
+                signInWithEmail();
+            } else if (LOGIN_TYPE_GOOGLE.equals(loginType)) {
+                String savedToken = sharedPreferences.getString(KEY_GOOGLE_TOKEN, "");
+                if (!savedToken.isEmpty()) {
+                    // Automatic login with Google
+                    firebaseAuthWithGoogle(savedToken);
+                }
+            }
+        }
+    }
+
+    private void setupClickListeners() {
+        findViewById(R.id.loginButton).setOnClickListener(v -> handleLogin());
+        findViewById(R.id.googleSignInButton).setOnClickListener(v -> handleGoogleSignIn());
+        findViewById(R.id.registerButton).setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        });
     }
 
     private void handleLogin() {
@@ -96,78 +124,217 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordInput.getText().toString().trim();
 
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your email and password", Toast.LENGTH_SHORT).show();
             return;
         }
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Save credentials if remember me is checked
-                        if (rememberMeCheckbox.isChecked()) {
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean(KEY_REMEMBER_ME, true);
-                            editor.putString(KEY_EMAIL, email);
-                            editor.putString(KEY_PASSWORD, password);
-                            editor.apply();
-                        } else {
-                            // Clear saved credentials
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.clear();
-                            editor.apply();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            user.getIdToken(true)
+                                    .addOnCompleteListener(tokenTask -> {
+                                        if (tokenTask.isSuccessful()) {
+                                            String idToken = tokenTask.getResult().getToken();
+                                            // Remember Me option processing
+                                            if (rememberMeCheckBox.isChecked()) {
+                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                editor.putBoolean(KEY_REMEMBER_ME, true);
+                                                editor.putString(KEY_EMAIL, email);
+                                                editor.putString(KEY_GOOGLE_TOKEN, idToken);
+                                                editor.apply();
+                                            } else {
+                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                editor.clear();
+                                                editor.apply();
+                                            }
+                                            startMainActivity();
+                                        }
+                                    });
                         }
-                        // Navigate to main screen
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, 
-                            getString(R.string.error_login_failed, task.getException().getMessage()),
-                            Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login failed: " +
+                                task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    private void loginWithSavedCredentials() {
-        String email = sharedPreferences.getString(KEY_EMAIL, "");
-        String password = sharedPreferences.getString(KEY_PASSWORD, "");
-
-        if (!email.isEmpty() && !password.isEmpty()) {
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, task -> {
-                        if (task.isSuccessful()) {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
-                        } else {
-                            // Clear saved credentials if auto-login fails
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.clear();
-                            editor.apply();
-                        }
-                    });
-        }
+    private void startMainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void handleGoogleSignIn() {
-        Intent signInIntent = googleSignInClient.getSignInIntent();
-        googleSignInLauncher.launch(signInIntent);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        // Sign out current session and start new sign-in process
+        googleSignInClient.signOut().addOnCompleteListener(task -> {
+            Intent signInIntent = googleSignInClient.getSignInIntent();
+            try {
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            } catch (Exception e) {
+                Toast.makeText(this, getString(R.string.error_message, e.getMessage()), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                String errorMessage;
+                switch (e.getStatusCode()) {
+                    case GoogleSignInStatusCodes.NETWORK_ERROR:
+                        errorMessage = "Network connection error. Please check your internet connection.";
+                        break;
+                    case GoogleSignInStatusCodes.SIGN_IN_CANCELLED:
+                        errorMessage = "Sign-in process cancelled.";
+                        break;
+                    case GoogleSignInStatusCodes.SIGN_IN_FAILED:
+                        errorMessage = "Sign-in failed. Please try again.";
+                        break;
+                    default:
+                        errorMessage = "Sign-in error: " + e.getMessage();
+                }
+                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
+        showProgressDialog();
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
+                    hideProgressDialog();
                     if (task.isSuccessful()) {
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            // Save credentials for Remember Me
+                            saveGoogleCredentials(idToken);
+                            updateUI(user);
+                        }
                     } else {
-                        Toast.makeText(LoginActivity.this, 
-                            getString(R.string.error_login_failed, task.getException().getMessage()),
-                            Toast.LENGTH_SHORT).show();
+                        String errorMessage = task.getException() != null ?
+                                task.getException().getMessage() :
+                                "Google sign-in failed";
+                        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+                        updateUI(null);
                     }
                 });
     }
 
-    private void handlePhoneSignIn() {
-        startActivity(new Intent(this, PhoneAuthActivity.class));
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Signing in...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            // User successfully logged in, redirect to main screen
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        } else {
+            // Login failed, reset UI
+            emailInput.setText("");
+            passwordInput.setText("");
+            rememberMeCheckBox.setChecked(false);
+            // Clear saved information
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+        }
+    }
+
+    private void loadSavedCredentials() {
+        if (sharedPreferences.getBoolean(KEY_REMEMBER_ME, false)) {
+            String loginType = sharedPreferences.getString(KEY_LOGIN_TYPE, "");
+            
+            if (LOGIN_TYPE_EMAIL.equals(loginType)) {
+                String savedEmail = sharedPreferences.getString(KEY_EMAIL, "");
+                String savedPassword = sharedPreferences.getString(KEY_PASSWORD, "");
+                emailInput.setText(savedEmail);
+                passwordInput.setText(savedPassword);
+                rememberMeCheckBox.setChecked(true);
+                
+                // Automatic login with email
+                signInWithEmail();
+            } else if (LOGIN_TYPE_GOOGLE.equals(loginType)) {
+                String savedToken = sharedPreferences.getString(KEY_GOOGLE_TOKEN, "");
+                if (!savedToken.isEmpty()) {
+                    // Automatic login with Google
+                    firebaseAuthWithGoogle(savedToken);
+                }
+            }
+        }
+    }
+
+    private void saveEmailCredentials(String email, String password) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (rememberMeCheckBox.isChecked()) {
+            editor.putBoolean(KEY_REMEMBER_ME, true);
+            editor.putString(KEY_LOGIN_TYPE, LOGIN_TYPE_EMAIL);
+            editor.putString(KEY_EMAIL, email);
+            editor.putString(KEY_PASSWORD, password);
+        } else {
+            editor.clear();
+        }
+        editor.apply();
+    }
+
+    private void saveGoogleCredentials(String idToken) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(KEY_REMEMBER_ME, true);
+        editor.putString(KEY_LOGIN_TYPE, LOGIN_TYPE_GOOGLE);
+        editor.putString(KEY_GOOGLE_TOKEN, idToken);
+        editor.apply();
+    }
+
+    private void signInWithEmail() {
+        String email = emailInput.getText().toString().trim();
+        String password = passwordInput.getText().toString().trim();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please enter your email and password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        saveEmailCredentials(email, password);
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this,
+                                getString(R.string.error_login_failed, task.getException().getMessage()),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 } 

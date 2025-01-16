@@ -5,105 +5,89 @@ public class Song {
     private String title;
     private String artist;
     private String album;
-    private String albumId;
-    private String genre;
-    private String albumArtUrl;
-    private int trackNumber;
+    private String albumCoverUrl;
     private String duration;
+    private int trackNumber;
+    private String genre;
 
+    // Empty constructor required for Firebase
     public Song() {
-        // Firebase için boş constructor
     }
 
-    public Song(String id, String title, String artist, String album, String albumId,
-               String genre, String albumArtUrl, int trackNumber, String duration) {
+    public Song(String id, String title, String artist, String album, String albumCoverUrl, String duration, int trackNumber) {
         this.id = id;
         this.title = title;
         this.artist = artist;
         this.album = album;
-        this.albumId = albumId;
-        this.genre = genre;
-        this.albumArtUrl = albumArtUrl;
-        this.trackNumber = trackNumber;
+        this.albumCoverUrl = albumCoverUrl;
         this.duration = duration;
+        this.trackNumber = trackNumber;
+        this.genre = genre;
     }
 
+    // Getters
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getArtist() {
         return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
     }
 
     public String getAlbum() {
         return album;
     }
 
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    public String getAlbumId() {
-        return albumId;
-    }
-
-    public void setAlbumId(String albumId) {
-        this.albumId = albumId;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public String getAlbumArtUrl() {
-        return albumArtUrl;
-    }
-
-    public void setAlbumArtUrl(String albumArtUrl) {
-        this.albumArtUrl = albumArtUrl;
-    }
-
-    public int getTrackNumber() {
-        return trackNumber;
-    }
-
-    public void setTrackNumber(int trackNumber) {
-        this.trackNumber = trackNumber;
+    public String getAlbumCoverUrl() {
+        return albumCoverUrl;
     }
 
     public String getDuration() {
         return duration;
     }
 
+    public int getTrackNumber() {
+        return trackNumber;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    // Setters
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
+    }
+
+    public void setAlbumCoverUrl(String albumCoverUrl) {
+        this.albumCoverUrl = albumCoverUrl;
+    }
+
     public void setDuration(String duration) {
         this.duration = duration;
     }
 
-    public int getDurationInSeconds() {
-        String[] parts = duration.split(":");
-        int minutes = Integer.parseInt(parts[0]);
-        int seconds = Integer.parseInt(parts[1]);
-        return minutes * 60 + seconds;
+    public void setTrackNumber(int trackNumber) {
+        this.trackNumber = trackNumber;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 } 

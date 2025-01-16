@@ -12,6 +12,8 @@ import java.util.List;
 
 import me.aydgn.mymusictracker.R;
 import me.aydgn.mymusictracker.model.Playlist;
+import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
 
 public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder> {
     private List<Playlist> playlists;
@@ -30,8 +32,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     @NonNull
     @Override
     public PlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_playlist, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.playlist_item, parent, false);
         return new PlaylistViewHolder(view);
     }
 
@@ -52,11 +53,17 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     }
 
     class PlaylistViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameTextView;
+        private final ShapeableImageView coverImage;
+        private final TextView nameText;
+        private final TextView createdByText;
+        private final TextView songCountText;
 
         PlaylistViewHolder(@NonNull View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.playlistNameTextView);
+            coverImage = itemView.findViewById(R.id.playlistCoverImage);
+            nameText = itemView.findViewById(R.id.playlistNameText);
+            createdByText = itemView.findViewById(R.id.createdByText);
+            songCountText = itemView.findViewById(R.id.songCountText);
 
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
@@ -76,7 +83,20 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         }
 
         void bind(Playlist playlist) {
-            nameTextView.setText(playlist.getName());
+            nameText.setText(playlist.getName());
+            createdByText.setText("Created by " + playlist.getCreatedBy());
+            songCountText.setText(playlist.getSongCount() + " songs");
+
+            // Show playlist cover image if available, otherwise show default image
+            if (playlist.getCoverUrl() != null && !playlist.getCoverUrl().isEmpty()) {
+                Glide.with(itemView.getContext())
+                    .load(playlist.getCoverUrl())
+                    .placeholder(R.drawable.default_album_art)
+                    .error(R.drawable.default_album_art)
+                    .into(coverImage);
+            } else {
+                coverImage.setImageResource(R.drawable.default_album_art);
+            }
         }
     }
 } 

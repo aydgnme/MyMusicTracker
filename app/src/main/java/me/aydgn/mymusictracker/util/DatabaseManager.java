@@ -54,7 +54,7 @@ public class DatabaseManager {
         void onError(String error);
     }
 
-    // Album işlemleri
+    // Album
     public void getAlbum(String albumId, DataCallback<Album> callback) {
         if (albumCache.containsKey(albumId)) {
             callback.onSuccess(albumCache.get(albumId));
@@ -81,7 +81,7 @@ public class DatabaseManager {
         });
     }
 
-    // Şarkı işlemleri
+    // Song
     public void getAllSongs(DataCallback<List<Song>> callback) {
         songsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -127,7 +127,7 @@ public class DatabaseManager {
             });
     }
 
-    // Playlist işlemleri
+    // Playlist
     public void createPlaylist(String name, Song firstSong, DataCallback<String> callback) {
         String userId = auth.getCurrentUser().getUid();
         DatabaseReference userPlaylistsRef = playlistsRef.child(userId);
@@ -247,7 +247,7 @@ public class DatabaseManager {
         }
     }
 
-    // Favoriler işlemleri
+    // Favorites
     public void addToFavorites(Song song, DataCallback<Void> callback) {
         String userId = auth.getCurrentUser().getUid();
         DatabaseReference favoritesRef = usersRef.child(userId).child("favorites");

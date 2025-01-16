@@ -52,6 +52,6 @@
         android:background="@color/spotify_dark_gray"
         app:itemIconTint="@color/nav_item_color"
         app:itemTextColor="@color/nav_item_color"
-        app:menu="@menu/bottom_nav_menu"/>
+        app:menu="@menu/bottom_navigation_menu"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout> 

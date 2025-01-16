@@ -1,0 +1,617 @@
+{
+  "albums": {
+    "album1": {
+      "artist": "Michael Jackson",
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png",
+      "genre": "Pop",
+      "releaseDate": "1982",
+      "songs": {
+        "song1": {
+          "duration": "6:03",
+          "title": "Wanna Be Startin' Somethin'",
+          "trackNumber": 1
+        },
+        "song2": {
+          "duration": "4:20",
+          "title": "Baby Be Mine",
+          "trackNumber": 2
+        },
+        "song3": {
+          "duration": "3:42",
+          "title": "The Girl Is Mine",
+          "trackNumber": 3
+        },
+        "song4": {
+          "duration": "5:57",
+          "title": "Thriller",
+          "trackNumber": 4
+        },
+        "song5": {
+          "duration": "4:18",
+          "title": "Beat It",
+          "trackNumber": 5
+        },
+        "song6": {
+          "duration": "4:54",
+          "title": "Billie Jean",
+          "trackNumber": 6
+        },
+        "song7": {
+          "duration": "4:06",
+          "title": "Human Nature",
+          "trackNumber": 7
+        },
+        "song8": {
+          "duration": "3:59",
+          "title": "P.Y.T. (Pretty Young Thing)",
+          "trackNumber": 8
+        },
+        "song9": {
+          "duration": "5:00",
+          "title": "The Lady in My Life",
+          "trackNumber": 9
+        }
+      },
+      "title": "Thriller"
+    },
+    "album2": {
+      "artist": "AC/DC",
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/ACDC_Back_in_Black.png/440px-ACDC_Back_in_Black.png",
+      "genre": "Rock",
+      "releaseDate": "1980",
+      "songs": {
+        "song1": {
+          "duration": "5:10",
+          "title": "Hells Bells",
+          "trackNumber": 1
+        },
+        "song2": {
+          "duration": "5:17",
+          "title": "Shoot to Thrill",
+          "trackNumber": 2
+        },
+        "song3": {
+          "duration": "4:15",
+          "title": "Back in Black",
+          "trackNumber": 3
+        },
+        "song4": {
+          "duration": "3:57",
+          "title": "Have a Drink on Me",
+          "trackNumber": 4
+        },
+        "song5": {
+          "duration": "3:30",
+          "title": "You Shook Me All Night Long",
+          "trackNumber": 5
+        },
+        "song6": {
+          "duration": "3:30",
+          "title": "Given the Dog a Bone",
+          "trackNumber": 6
+        },
+        "song7": {
+          "duration": "4:16",
+          "title": "Let Me Put My Love into You",
+          "trackNumber": 7
+        },
+        "song8": {
+          "duration": "4:15",
+          "title": "Rock and Roll Ain't Noise Pollution",
+          "trackNumber": 8
+        }
+      },
+      "title": "Back in Black"
+    },
+    "album3": {
+      "artist": "Pink Floyd",
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png",
+      "genre": "Progressive Rock",
+      "releaseDate": "1973",
+      "songs": {
+        "song1": {
+          "duration": "1:30",
+          "title": "Speak to Me",
+          "trackNumber": 1
+        },
+        "song10": {
+          "duration": "2:03",
+          "title": "Eclipse",
+          "trackNumber": 10
+        },
+        "song2": {
+          "duration": "2:43",
+          "title": "Breathe",
+          "trackNumber": 2
+        },
+        "song3": {
+          "duration": "3:30",
+          "title": "On the Run",
+          "trackNumber": 3
+        },
+        "song4": {
+          "duration": "7:01",
+          "title": "Time",
+          "trackNumber": 4
+        },
+        "song5": {
+          "duration": "4:15",
+          "title": "The Great Gig in the Sky",
+          "trackNumber": 5
+        },
+        "song6": {
+          "duration": "6:23",
+          "title": "Money",
+          "trackNumber": 6
+        },
+        "song7": {
+          "duration": "7:49",
+          "title": "Us and Them",
+          "trackNumber": 7
+        },
+        "song8": {
+          "duration": "3:26",
+          "title": "Any Colour You Like",
+          "trackNumber": 8
+        },
+        "song9": {
+          "duration": "3:49",
+          "title": "Brain Damage",
+          "trackNumber": 9
+        }
+      },
+      "title": "The Dark Side of the Moon"
+    },
+    "album4": {
+      "artist": "The Beatles",
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/4/42/Beatles_-_Abbey_Road.jpg",
+      "genre": "Rock",
+      "releaseDate": "1969",
+      "songs": {
+        "song1": {
+          "duration": "4:19",
+          "title": "Come Together",
+          "trackNumber": 1
+        },
+        "song10": {
+          "duration": "2:26",
+          "title": "Sun King",
+          "trackNumber": 10
+        },
+        "song2": {
+          "duration": "3:03",
+          "title": "Something",
+          "trackNumber": 2
+        },
+        "song3": {
+          "duration": "3:27",
+          "title": "Maxwell's Silver Hammer",
+          "trackNumber": 3
+        },
+        "song4": {
+          "duration": "3:26",
+          "title": "Oh! Darling",
+          "trackNumber": 4
+        },
+        "song5": {
+          "duration": "2:51",
+          "title": "Octopus's Garden",
+          "trackNumber": 5
+        },
+        "song6": {
+          "duration": "7:47",
+          "title": "I Want You (She's So Heavy)",
+          "trackNumber": 6
+        },
+        "song7": {
+          "duration": "3:05",
+          "title": "Here Comes the Sun",
+          "trackNumber": 7
+        },
+        "song8": {
+          "duration": "2:45",
+          "title": "Because",
+          "trackNumber": 8
+        },
+        "song9": {
+          "duration": "4:02",
+          "title": "You Never Give Me Your Money",
+          "trackNumber": 9
+        }
+      },
+      "title": "Abbey Road"
+    },
+    "album5": {
+      "artist": "Nirvana",
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg",
+      "genre": "Grunge",
+      "releaseDate": "1991",
+      "songs": {
+        "song1": {
+          "duration": "5:01",
+          "title": "Smells Like Teen Spirit",
+          "trackNumber": 1
+        },
+        "song10": {
+          "duration": "3:32",
+          "title": "Stay Away",
+          "trackNumber": 10
+        },
+        "song11": {
+          "duration": "3:16",
+          "title": "On a Plain",
+          "trackNumber": 11
+        },
+        "song12": {
+          "duration": "3:52",
+          "title": "Something in the Way",
+          "trackNumber": 12
+        },
+        "song2": {
+          "duration": "4:14",
+          "title": "In Bloom",
+          "trackNumber": 2
+        },
+        "song3": {
+          "duration": "3:39",
+          "title": "Come as You Are",
+          "trackNumber": 3
+        },
+        "song4": {
+          "duration": "3:03",
+          "title": "Breed",
+          "trackNumber": 4
+        },
+        "song5": {
+          "duration": "4:17",
+          "title": "Lithium",
+          "trackNumber": 5
+        },
+        "song6": {
+          "duration": "2:57",
+          "title": "Polly",
+          "trackNumber": 6
+        },
+        "song7": {
+          "duration": "2:22",
+          "title": "Territorial Pissings",
+          "trackNumber": 7
+        },
+        "song8": {
+          "duration": "3:43",
+          "title": "Drain You",
+          "trackNumber": 8
+        },
+        "song9": {
+          "duration": "2:36",
+          "title": "Lounge Act",
+          "trackNumber": 9
+        }
+      },
+      "title": "Nevermind"
+    },
+    "album6": {
+      "artist": "Fleetwood Mac",
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/f/fb/FMacRumours.PNG",
+      "genre": "Rock",
+      "releaseDate": "1977",
+      "songs": {
+        "song1": {
+          "duration": "2:43",
+          "title": "Second Hand News",
+          "trackNumber": 1
+        },
+        "song10": {
+          "duration": "3:54",
+          "title": "Oh Daddy",
+          "trackNumber": 10
+        },
+        "song11": {
+          "duration": "4:51",
+          "title": "Gold Dust Woman",
+          "trackNumber": 11
+        },
+        "song2": {
+          "duration": "4:14",
+          "title": "Dreams",
+          "trackNumber": 2
+        },
+        "song3": {
+          "duration": "2:02",
+          "title": "Never Going Back Again",
+          "trackNumber": 3
+        },
+        "song4": {
+          "duration": "3:11",
+          "title": "Don't Stop",
+          "trackNumber": 4
+        },
+        "song5": {
+          "duration": "3:43",
+          "title": "Go Your Own Way",
+          "trackNumber": 5
+        },
+        "song6": {
+          "duration": "3:20",
+          "title": "Songbird",
+          "trackNumber": 6
+        },
+        "song7": {
+          "duration": "4:28",
+          "title": "The Chain",
+          "trackNumber": 7
+        },
+        "song8": {
+          "duration": "3:31",
+          "title": "You Make Loving Fun",
+          "trackNumber": 8
+        },
+        "song9": {
+          "duration": "3:11",
+          "title": "I Don't Want to Know",
+          "trackNumber": 9
+        }
+      },
+      "title": "Rumours"
+    }
+  },
+  "users": {
+    "08mDUuMsi2fgVweoPwPsxkoeUFP2": {
+      "favoriteGenres": [
+        "Pop",
+        "Rock",
+        "Hip Hop",
+        "Electronic"
+      ],
+      "favorites": {
+        "song11": {
+          "album": "Rumours",
+          "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/en/f/fb/FMacRumours.PNG",
+          "artist": "Fleetwood Mac",
+          "duration": "4:51",
+          "id": "song11",
+          "title": "Gold Dust Woman",
+          "trackNumber": 11
+        },
+        "song4": {
+          "album": "Rumours",
+          "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/en/f/fb/FMacRumours.PNG",
+          "artist": "Fleetwood Mac",
+          "duration": "3:11",
+          "id": "song4",
+          "title": "Don't Stop",
+          "trackNumber": 4
+        },
+        "song7": {
+          "album": "Back in Black",
+          "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/ACDC_Back_in_Black.png/440px-ACDC_Back_in_Black.png",
+          "artist": "AC/DC",
+          "duration": "4:16",
+          "id": "song7",
+          "title": "Let Me Put My Love into You",
+          "trackNumber": 7
+        },
+        "song9": {
+          "album": "Nevermind",
+          "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg",
+          "artist": "Nirvana",
+          "duration": "2:36",
+          "id": "song9",
+          "title": "Lounge Act",
+          "trackNumber": 9
+        }
+      },
+      "name": "Mert Aydogan",
+      "playlists": {
+        "-OFcPvQJcex8SH0Zxg2b": {
+          "createdAt": 1735844935351,
+          "songs": {
+            "song10": {
+              "album": "Rumours",
+              "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/en/f/fb/FMacRumours.PNG",
+              "artist": "Fleetwood Mac",
+              "duration": "3:54",
+              "id": "song10",
+              "title": "Oh Daddy",
+              "trackNumber": 10
+            },
+            "song3": {
+              "album": "Back in Black",
+              "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/ACDC_Back_in_Black.png/440px-ACDC_Back_in_Black.png",
+              "artist": "AC/DC",
+              "duration": "4:15",
+              "id": "song3",
+              "title": "Back in Black",
+              "trackNumber": 3
+            }
+          },
+          "title": "aaa",
+          "updatedAt": 1735844935351
+        },
+        "-OFcQaELt-hNqTMZnpwQ": {
+          "createdAt": 1735845110713,
+          "title": "Playlistte",
+          "updatedAt": 1735845110713
+        }
+      }
+    },
+    "4V0uxVTURgZwJREurTdAonaR64F3": {
+      "createdAt": 1735846196023,
+      "email": "calingeo@mail.ru",
+      "favoriteGenres": [
+        "Pop",
+        "Rock",
+        "Hip Hop",
+        "R&B",
+        "Classical",
+        "Electronic",
+        "Funk"
+      ],
+      "favorites": {
+        "song6": {
+          "album": "Thriller",
+          "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png",
+          "artist": "Michael Jackson",
+          "duration": "4:54",
+          "id": "song6",
+          "title": "Billie Jean",
+          "trackNumber": 6
+        }
+      },
+      "name": "Calin Georgescu",
+      "playlists": {
+        "-OFcV6ct9pZqWYci6IKH": {
+          "createdAt": 1735846291623,
+          "title": "Rasputin",
+          "updatedAt": 1735846291623
+        }
+      },
+      "username": "ruskiblyat"
+    },
+    "R0iBTAm1I4TehKIzl3ET8BOncMw2": {
+      "bio": "I hate andorid",
+      "createdAt": 1735846478476,
+      "email": "mertaydogn0@gmail.com",
+      "favoriteGenres": [
+        "Pop",
+        "Hip Hop",
+        "Country",
+        "Folk",
+        "Pop",
+        "Hip Hop",
+        "Country",
+        "Folk"
+      ],
+      "favorites": {
+        "song1": {
+          "album": "Back in Black",
+          "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/ACDC_Back_in_Black.png/440px-ACDC_Back_in_Black.png",
+          "artist": "AC/DC",
+          "duration": "5:10",
+          "id": "song1",
+          "title": "Hells Bells",
+          "trackNumber": 1
+        },
+        "song10": {
+          "duration": "3:32",
+          "id": "song10",
+          "title": "Stay Away",
+          "trackNumber": 10
+        },
+        "song12": {
+          "duration": "3:52",
+          "id": "song12",
+          "title": "Something in the Way",
+          "trackNumber": 12
+        },
+        "song4": {
+          "album": "Back in Black",
+          "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/ACDC_Back_in_Black.png/440px-ACDC_Back_in_Black.png",
+          "artist": "AC/DC",
+          "duration": "3:57",
+          "id": "song4",
+          "title": "Have a Drink on Me",
+          "trackNumber": 4
+        },
+        "song6": {
+          "album": "Thriller",
+          "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png",
+          "artist": "Michael Jackson",
+          "duration": "4:54",
+          "id": "song6",
+          "title": "Billie Jean",
+          "trackNumber": 6
+        },
+        "song7": {
+          "album": "Back in Black",
+          "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/ACDC_Back_in_Black.png/440px-ACDC_Back_in_Black.png",
+          "artist": "AC/DC",
+          "duration": "4:16",
+          "id": "song7",
+          "title": "Let Me Put My Love into You",
+          "trackNumber": 7
+        }
+      },
+      "id": "R0iBTAm1I4TehKIzl3ET8BOncMw2",
+      "lastLoginAt": 1735846478476,
+      "name": "Mert Aydogan",
+      "playlists": {
+        "-OGZ-UB-3zQDiEalPWJ0": {
+          "createdAt": 1736844632460,
+          "id": "-OGZ-UB-3zQDiEalPWJ0",
+          "songs": {
+            "song2": {
+              "album": "Back in Black",
+              "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/ACDC_Back_in_Black.png/440px-ACDC_Back_in_Black.png",
+              "artist": "AC/DC",
+              "duration": "5:17",
+              "id": "song2",
+              "title": "Shoot to Thrill",
+              "trackNumber": 2
+            },
+            "song5": {
+              "album": "Back in Black",
+              "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/ACDC_Back_in_Black.png/440px-ACDC_Back_in_Black.png",
+              "artist": "AC/DC",
+              "duration": "3:30",
+              "id": "song5",
+              "title": "You Shook Me All Night Long",
+              "trackNumber": 5
+            },
+            "song6": {
+              "album": "Back in Black",
+              "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/ACDC_Back_in_Black.png/440px-ACDC_Back_in_Black.png",
+              "artist": "AC/DC",
+              "duration": "3:30",
+              "id": "song6",
+              "title": "Given the Dog a Bone",
+              "trackNumber": 6
+            },
+            "song8": {
+              "album": "Back in Black",
+              "albumCoverUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/ACDC_Back_in_Black.png/440px-ACDC_Back_in_Black.png",
+              "artist": "AC/DC",
+              "duration": "4:15",
+              "id": "song8",
+              "title": "Rock and Roll Ain't Noise Pollution",
+              "trackNumber": 8
+            }
+          },
+          "title": "Rock101",
+          "userId": "R0iBTAm1I4TehKIzl3ET8BOncMw2"
+        }
+      },
+      "recent_searches": {
+        "-OGZ-R8piQ6Hh1TVPa0Y": {
+          "query": "AC/DC",
+          "timestamp": 1736844620033
+        },
+        "-OGZ-R8sa-LWdPxR7PgU": {
+          "query": "AC/DC",
+          "timestamp": 1736844620036
+        },
+        "-OGZ9CqWEQx7XAaz-ydY": {
+          "query": "BILLIE",
+          "timestamp": 1736847182886
+        },
+        "-OGZ9CqcP8dd4oUJrlLX": {
+          "query": "BILLIE",
+          "timestamp": 1736847182893
+        },
+        "-OGekD2d0sbUCFZN2Y_7": {
+          "query": "BILLIE",
+          "timestamp": 1736957801110
+        },
+        "-OGekDrcZsBRW-LvY2sY": {
+          "query": "AC/DC",
+          "timestamp": 1736957804437
+        },
+        "-OGekLAZ4zYTNAFy9ipQ": {
+          "query": "AC/DC",
+          "timestamp": 1736957834385
+        }
+      },
+      "username": "aydgn.me"
+    }
+  }
+}
