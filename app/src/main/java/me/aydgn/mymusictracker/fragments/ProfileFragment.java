@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +39,7 @@ import me.aydgn.mymusictracker.PlaylistDetailActivity;
 
 public class ProfileFragment extends Fragment implements PlaylistAdapter.OnPlaylistClickListener {
     private MaterialButton logoutButton;
+    private MaterialButton settingsButton;
     private RecyclerView favoritesRecyclerView;
     private RecyclerView playlistsRecyclerView;
     private SongAdapter songAdapter;
@@ -68,11 +70,15 @@ public class ProfileFragment extends Fragment implements PlaylistAdapter.OnPlayl
 
     private void initializeViews(View view) {
         logoutButton = view.findViewById(R.id.logoutButton);
+        settingsButton = view.findViewById(R.id.settingsButton);
         favoritesRecyclerView = view.findViewById(R.id.favoritesRecyclerView);
         playlistsRecyclerView = view.findViewById(R.id.playlistsRecyclerView);
 
         // Add click event to FAB
         view.findViewById(R.id.createPlaylistFab).setOnClickListener(v -> showCreatePlaylistDialog());
+        
+        // Add click event to settings button
+        settingsButton.setOnClickListener(v -> showSettingsDialog());
     }
 
     private void setupRecyclerViews() {
@@ -276,5 +282,71 @@ public class ProfileFragment extends Fragment implements PlaylistAdapter.OnPlayl
                 .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Playlist created", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to create playlist", Toast.LENGTH_SHORT).show());
         }
+    }
+
+    private void showSettingsDialog() {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_settings, null);
+        TextInputEditText passwordInput = dialogView.findViewById(R.id.passwordInput);
+        MaterialCheckBox[] genreCheckboxes = {
+            dialogView.findViewById(R.id.rockCheckbox),
+            dialogView.findViewById(R.id.popCheckbox),
+            dialogView.findViewById(R.id.jazzCheckbox),
+            dialogView.findViewById(R.id.classicalCheckbox),
+            dialogView.findViewById(R.id.hipHopCheckbox)
+        };
+
+        // Load current user preferences
+        databaseRef.child("users").child(userId).child("preferences").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    DataSnapshot genresSnapshot = snapshot.child("genres");
+                    if (genresSnapshot.exists()) {
+                        Map<String, Boolean> genres = (Map<String, Boolean>) genresSnapshot.getValue();
+                        if (genres != null) {
+                            for (MaterialCheckBox checkbox : genreCheckboxes) {
+                                String genre = checkbox.getText().toString().toLowerCase();
+                                checkbox.setChecked(genres.containsKey(genre) && genres.get(genre));
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Failed to load preferences", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        new MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Settings")
+            .setView(dialogView)
+            .setPositiveButton("Save", (dialog, which) -> {
+                // Save password if changed
+                String newPassword = passwordInput.getText().toString();
+                if (!newPassword.isEmpty()) {
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    if (user != null) {
+                        user.updatePassword(newPassword)
+                            .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Password updated successfully", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to update password: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    }
+                }
+
+                // Save genre preferences
+                Map<String, Boolean> selectedGenres = new HashMap<>();
+                for (MaterialCheckBox checkbox : genreCheckboxes) {
+                    if (checkbox.isChecked()) {
+                        selectedGenres.put(checkbox.getText().toString().toLowerCase(), true);
+                    }
+                }
+                
+                databaseRef.child("users").child(userId).child("preferences").child("genres").setValue(selectedGenres)
+                    .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Preferences saved successfully", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to save preferences", Toast.LENGTH_SHORT).show());
+            })
+            .setNegativeButton("Cancel", null)
+            .show();
     }
 } 
